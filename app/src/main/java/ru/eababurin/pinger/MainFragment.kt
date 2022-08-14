@@ -1,9 +1,11 @@
 package ru.eababurin.pinger
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
@@ -17,47 +19,79 @@ class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
+    private var isFirstRun = true
+    private lateinit var array: Array<out String>
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
-//        val view = binding.root
-//        return view
         return binding.root
-//        return inflater.inflate(R.layout.fragment_main, container, false)
+    }
+
+    override fun onDestroy() {
+        _binding = null
+        super.onDestroy()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.buttonCheck.setOnClickListener {
-            if (binding.editextAddress.text.isEmpty()) {
+        array = resources.getStringArray(R.array.kvms)
+
+
+        binding.spinnerFavoritesList.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    if (isFirstRun) {
+                        isFirstRun = false
+                        binding.edittextAddress.text.clear()
+                        binding.spinnerFavoritesList.setSelection(array.size-1, false)
+                    } else {
+                        binding.edittextAddress.setText(
+                            array[position],
+                            TextView.BufferType.EDITABLE
+                        )
+                        Toast.makeText(requireActivity(), position.toString(), Toast.LENGTH_LONG)
+                            .show()
+                    }
+                }
+            }
+
+        binding.imagebuttonAddToFavorites.setOnClickListener {
+            Toast.makeText(requireActivity(), "Функция пока недоступна", Toast.LENGTH_LONG).show()
+        }
+
+        binding.imagebuttonChangeTheme.setOnClickListener {
+            Toast.makeText(requireActivity(), "Функция пока недоступна", Toast.LENGTH_LONG).show()
+        }
+
+        binding.buttonCheckAvailability.setOnClickListener {
+            if (binding.edittextAddress.text.isEmpty()) {
                 Toast.makeText(requireContext(), "Введите адрес", Toast.LENGTH_LONG).show()
             } else {
-                checkAddress(binding.editextAddress.text.toString())
+                checkAddress(binding.edittextAddress.text.toString())
             }
         }
 
-        binding.buttonKvmos2.setOnClickListener {
-            binding.editextAddress.setText("os2.kvm.smailru.net", TextView.BufferType.EDITABLE)
-        }
-
-        binding.buttonKvmos3.setOnClickListener {
-            binding.editextAddress.setText("os3.kvm.smailru.net", TextView.BufferType.EDITABLE)
-        }
-
-        binding.buttonYandex.setOnClickListener {
-            binding.editextAddress.setText("yandex.ru", TextView.BufferType.EDITABLE)
-        }
-
-        binding.editextAddress.addTextChangedListener {
+        binding.edittextAddress.addTextChangedListener {
             if (binding.textviewResult.isVisible) binding.textviewResult.visibility = View.INVISIBLE
         }
 
         binding.buttonClear.setOnClickListener {
-            binding.editextAddress.text.clear()
             if (binding.textviewResult.isVisible) binding.textviewResult.visibility = View.INVISIBLE
+            binding.edittextAddress.text.clear()
+            binding.spinnerFavoritesList.setSelection(array.size-1, false)
+
         }
     }
 
@@ -86,10 +120,5 @@ class MainFragment : Fragment() {
                 }
             }
         }.start()
-    }
-
-    override fun onDestroy() {
-        _binding = null
-        super.onDestroy()
     }
 }
