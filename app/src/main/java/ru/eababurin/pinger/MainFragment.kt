@@ -1,13 +1,12 @@
 package ru.eababurin.pinger
 
+import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.AdapterView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -27,6 +26,10 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
+
+        (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
+        setHasOptionsMenu(true)
+
         return binding.root
     }
 
@@ -35,11 +38,20 @@ class MainFragment : Fragment() {
         super.onDestroy()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.options_menu, menu)
+//        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) { R.id.options_menu_change_theme -> { changeTheme() } }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         array = resources.getStringArray(R.array.kvms)
-
 
         binding.spinnerFavoritesList.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
@@ -68,10 +80,6 @@ class MainFragment : Fragment() {
             }
 
         binding.imagebuttonAddToFavorites.setOnClickListener {
-            Toast.makeText(requireActivity(), "Функция пока недоступна", Toast.LENGTH_LONG).show()
-        }
-
-        binding.imagebuttonChangeTheme.setOnClickListener {
             Toast.makeText(requireActivity(), "Функция пока недоступна", Toast.LENGTH_LONG).show()
         }
 
@@ -120,5 +128,18 @@ class MainFragment : Fragment() {
                 }
             }
         }.start()
+    }
+
+    private fun changeTheme() {
+        val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+
+        when (currentNightMode) {
+            Configuration.UI_MODE_NIGHT_NO -> {
+                Toast.makeText(requireContext(), "Светлая тема", Toast.LENGTH_LONG).show()
+            }
+            Configuration.UI_MODE_NIGHT_YES -> {
+                Toast.makeText(requireContext(), "Тёмная тема", Toast.LENGTH_LONG).show()
+            }
+        }
     }
 }

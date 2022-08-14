@@ -1,109 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="8dp"
+    android:orientation="vertical"
     tools:context=".MainFragment">
 
-    <TextView
-        android:id="@+id/textview_connection_name"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_margin="8dp"
-        android:gravity="center"
-        android:text="Pinger"
-        android:textSize="32sp"
-        app:layout_constraintBottom_toBottomOf="@id/imagebutton_change_theme"
-        app:layout_constraintEnd_toStartOf="@id/imagebutton_change_theme"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/imagebutton_change_theme" />
-
-    <ImageButton
-        android:id="@+id/imagebutton_change_theme"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:background="@null"
-        android:contentDescription="Сменить тему"
-        android:src="@drawable/ic_baseline_brightness_6_24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Spinner
-        android:id="@+id/spinner_favorites_list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:entries="@array/kvms"
-        android:prompt="@string/app_name"
-        android:spinnerMode="dialog"
-        app:layout_constraintBottom_toTopOf="@id/textview_result"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_connection_name" />
-
-    <EditText
-        android:id="@+id/edittext_address"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_margin="8dp"
-        android:maxLines="1"
-        android:inputType="text"
-        android:hint="Введите адрес сервера"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@id/spinner_favorites_list"
-        app:layout_constraintEnd_toStartOf="@id/imagebutton_add_to_favorites"
-        app:layout_constraintStart_toEndOf="@id/spinner_favorites_list"
-        app:layout_constraintTop_toTopOf="@id/spinner_favorites_list" />
-
-    <ImageButton
-        android:id="@+id/imagebutton_add_to_favorites"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_margin="8dp"
-        android:background="@null"
-        android:contentDescription="Добавить в избранное"
-        android:src="@drawable/ic_baseline_favorite_24"
-        app:layout_constraintBottom_toBottomOf="@id/spinner_favorites_list"
-        app:layout_constraintEnd_toEndOf="@id/imagebutton_change_theme"
-        app:layout_constraintStart_toStartOf="@id/imagebutton_change_theme"
-        app:layout_constraintTop_toTopOf="@id/edittext_address" />
-
-    <TextView
-        android:id="@+id/textview_result"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:gravity="center"
-        android:textSize="32sp"
-        app:layout_constraintBottom_toTopOf="@id/button_check_availability"
-        app:layout_constraintEnd_toEndOf="@id/imagebutton_add_to_favorites"
-        app:layout_constraintStart_toStartOf="@id/spinner_favorites_list"
-        app:layout_constraintTop_toBottomOf="@id/spinner_favorites_list"
-        tools:text="Сервер доступен" />
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/button_clear"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:backgroundTint="@color/red_900"
-        android:text="Очистить"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:title="@string/app_name"
+            app:titleTextColor="@color/white" />
 
-    <Button
-        android:id="@+id/button_check_availability"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:focusedByDefault="true"
-        android:text="Проверить"
-        app:layout_constraintBottom_toBottomOf="@id/button_clear"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/button_clear"
-        app:layout_constraintTop_toTopOf="@id/button_clear" />
+    </com.google.android.material.appbar.AppBarLayout>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Spinner
+            android:id="@+id/spinner_favorites_list"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:entries="@array/kvms"
+            android:prompt="@string/app_name"
+            android:spinnerMode="dialog"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/edittext_address"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_margin="8dp"
+            android:hint="@string/server_address_hint"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@id/spinner_favorites_list"
+            app:layout_constraintEnd_toStartOf="@id/imagebutton_add_to_favorites"
+            app:layout_constraintStart_toEndOf="@id/spinner_favorites_list"
+            app:layout_constraintTop_toTopOf="@id/spinner_favorites_list" />
+
+        <ImageButton
+            android:id="@+id/imagebutton_add_to_favorites"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="8dp"
+            android:background="@null"
+            android:contentDescription="@string/add_to_favorites_description"
+            android:src="@drawable/ic_baseline_favorite_24"
+            app:layout_constraintBottom_toBottomOf="@id/edittext_address"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/edittext_address" />
+
+        <TextView
+            android:id="@+id/textview_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:gravity="center"
+            android:textSize="32sp"
+            app:layout_constraintBottom_toTopOf="@id/button_check_availability"
+            app:layout_constraintEnd_toEndOf="@id/imagebutton_add_to_favorites"
+            app:layout_constraintStart_toStartOf="@id/spinner_favorites_list"
+            app:layout_constraintTop_toBottomOf="@id/spinner_favorites_list"
+            tools:text="Сервер доступен" />
+
+        <Button
+            android:id="@+id/button_clear"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:backgroundTint="@color/red_900"
+            android:text="Очистить"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/button_check_availability"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:focusedByDefault="true"
+            android:text="Проверить"
+            app:layout_constraintBottom_toBottomOf="@id/button_clear"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/button_clear"
+            app:layout_constraintTop_toTopOf="@id/button_clear" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

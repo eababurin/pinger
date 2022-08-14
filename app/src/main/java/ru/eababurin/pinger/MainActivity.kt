@@ -10,7 +10,7 @@ class MainActivity : AppCompatActivity() {
 
         supportFragmentManager
             .beginTransaction()
-            .add(R.id.fragmentLayout, MainFragment())
+            .replace(R.id.fragmentLayout, MainFragment())
             .commit()
     }
 }

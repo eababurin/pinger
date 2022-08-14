@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Pinger</string>
+    <string name="server_address_hint">Введите адрес сервера</string>
+    <string name="add_to_favorites_description">Добавить в избранное</string>
+    <string name="change_theme">Сменить тему</string>
 </resources>
