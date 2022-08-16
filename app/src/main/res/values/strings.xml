@@ -3,4 +3,6 @@
     <string name="server_address_hint">Введите адрес сервера</string>
     <string name="add_to_favorites_description">Добавить в избранное</string>
     <string name="change_theme">Сменить тему</string>
+    <string name="button_check_availability">Проверить доступность</string>
+    <string name="button_clear">Очистить</string>
 </resources>

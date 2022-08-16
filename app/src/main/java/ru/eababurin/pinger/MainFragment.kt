@@ -150,7 +150,8 @@ class MainFragment : Fragment() {
                 if (isReachable) {
                     requireActivity().runOnUiThread {
                         binding.textviewResult.apply {
-                            text = "Работает :D"
+                            text = "Сервер доступен"
+                            setTextColor(resources.getColor(R.color.server_is_available, null))
                             visibility = View.VISIBLE
                         }
                     }
@@ -158,7 +159,8 @@ class MainFragment : Fragment() {
             } catch (e: Exception) {
                 requireActivity().runOnUiThread {
                     binding.textviewResult.apply {
-                        text = "Не работает >_<"
+                        text = "Сервер недоступен"
+                        setTextColor(resources.getColor(R.color.server_is_unavailable, null))
                         visibility = View.VISIBLE
                     }
                 }
