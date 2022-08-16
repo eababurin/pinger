@@ -32,7 +32,6 @@
             android:layout_width="48dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:entries="@array/kvms"
             android:prompt="@string/app_name"
             android:spinnerMode="dialog"
             app:layout_constraintStart_toStartOf="parent"

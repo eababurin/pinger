@@ -1,62 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="kvms">
-        <item>ms1.kvm.smailru.net</item>
-        <item>ms3.kvm.smailru.net</item>
-        <item>ms7.kvm.smailru.net</item>
-        <item>ms11.kvm.smailru.net</item>
-        <item>ms12.kvm.smailru.net</item>
-        <item>ms13.kvm.smailru.net</item>
-        <item>ms14.kvm.smailru.net</item>
-        <item>ms15.kvm.smailru.net</item>
-
-        <item>os1.kvm.smailru.net</item>
-        <item>os2.kvm.smailru.net</item>
-
-        <item>ug1.kvm.smailru.net</item>
-        <item>ug2.kvm.smailru.net</item>
-        <item>ug3.kvm.smailru.net</item>
-        <item>ug4.kvm.smailru.net</item>
-        <item>ug5.kvm.smailru.net</item>
-        <item>ug6.kvm.smailru.net</item>
-
-        <item>ko1.kvm.smailru.net</item>
-        <item>ko2.kvm.smailru.net</item>
-        <item>ko3.kvm.smailru.net</item>
-        <item>ko4.kvm.smailru.net</item>
-        <item>ko5.kvm.smailru.net</item>
-        <item>ko6.kvm.smailru.net</item>
-        <item>ko7.kvm.smailru.net</item>
-        <item>ko8.kvm.smailru.net</item>
-        <item>ko9.kvm.smailru.net</item>
-        <item>ko10.kvm.smailru.net</item>
-        <item>ko11.kvm.smailru.net</item>
-        <item>ko12.kvm.smailru.net</item>
-        <item>ko13.kvm.smailru.net</item>
-        <item>ko14.kvm.smailru.net</item>
-        <item>ko15.kvm.smailru.net</item>
-        <item>ko16.kvm.smailru.net</item>
-
-        <item>bo1.kvm.smailru.net</item>
-        <item>bo2.kvm.smailru.net</item>
-        <item>bo3.kvm.smailru.net</item>
-        <item>bo4.kvm.smailru.net</item>
-        <item>bo6.kvm.smailru.net</item>
-        <item>bo7.kvm.smailru.net</item>
-        <item>bo8.kvm.smailru.net</item>
-        <item>bo9.kvm.smailru.net</item>
-        <item>bo10.kvm.smailru.net</item>
-
-        <item>ud01.kvm.smailru.net</item>
-        <item>ud02.kvm.smailru.net</item>
-        <item>ud03.kvm.smailru.net</item>
-        <item>ud04.kvm.smailru.net</item>
-        <item>ud05.kvm.smailru.net</item>
-
-        <item>sel01.kvm.smailru.net</item>
-        <item>sel02.kvm.smailru.net</item>
-
-        <item></item>
-
+        <item>eababurin.ru</item>
+        <item>test.eababurin.ru</item>
     </string-array>
 </resources>

@@ -5,9 +5,7 @@ import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.*
-import android.widget.AdapterView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.isVisible
@@ -18,14 +16,18 @@ import java.net.InetAddress
 
 class MainFragment : Fragment() {
 
+    companion object {
+        const val FAVOURITES_KEY = "Favourites"
+        const val THEME_KEY = "Theme"
+    }
+
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var sharedPreferencesEditor: SharedPreferences.Editor
 
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
-    private var isFirstRun = true
-    private lateinit var array: Array<out String>
+    private lateinit var array : MutableList<String>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,6 +37,8 @@ class MainFragment : Fragment() {
 
         (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
         setHasOptionsMenu(true)
+
+        array = mutableListOf()
 
         return binding.root
     }
@@ -62,11 +66,11 @@ class MainFragment : Fragment() {
         when (requireActivity().resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
             Configuration.UI_MODE_NIGHT_NO -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                sharedPreferencesEditor.putInt("THEME", Configuration.UI_MODE_NIGHT_YES)
+                sharedPreferencesEditor.putInt(THEME_KEY, Configuration.UI_MODE_NIGHT_YES)
             }
             Configuration.UI_MODE_NIGHT_YES -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                sharedPreferencesEditor.putInt("THEME", Configuration.UI_MODE_NIGHT_NO)
+                sharedPreferencesEditor.putInt(THEME_KEY, Configuration.UI_MODE_NIGHT_NO)
             }
         }
         sharedPreferencesEditor.commit()
@@ -74,11 +78,11 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        sharedPreferences = requireActivity().getSharedPreferences("THEME", Context.MODE_PRIVATE)
+        sharedPreferences = requireActivity().getSharedPreferences(THEME_KEY, Context.MODE_PRIVATE)
         sharedPreferencesEditor = sharedPreferences.edit()
 
         if (Configuration.UI_MODE_NIGHT_YES == sharedPreferences.getInt(
-                "THEME",
+                THEME_KEY,
                 Configuration.UI_MODE_NIGHT_NO
             )
         ) {
@@ -89,23 +93,22 @@ class MainFragment : Fragment() {
 
         super.onViewCreated(view, savedInstanceState)
 
-        array = resources.getStringArray(R.array.kvms)
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey(FAVOURITES_KEY)) {
+                array.addAll(savedInstanceState.getStringArray(FAVOURITES_KEY) as Array<out String>)
+
+//                val spinnerAdapter : SpinnerAdapter = ArrayAdapter.createFromResource(requireContext(), array, android.R.layout.simple_spinner_item)
+            }
+        }
 
         binding.spinnerFavoritesList.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
 
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    if (isFirstRun) {
-                        isFirstRun = false
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    if (array.isEmpty()) {
                         binding.edittextAddress.text.clear()
-                        binding.spinnerFavoritesList.setSelection(array.size - 1, false)
                     } else {
                         binding.edittextAddress.setText(
                             array[position],
@@ -116,7 +119,16 @@ class MainFragment : Fragment() {
             }
 
         binding.imagebuttonAddToFavorites.setOnClickListener {
-            Toast.makeText(requireActivity(), "Функция пока недоступна", Toast.LENGTH_LONG).show()
+            if (binding.edittextAddress.text.isEmpty()) {
+                Toast.makeText(requireActivity(), "Введите адрес сервера", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+            if (array.contains(binding.edittextAddress.text.toString())) {
+                Toast.makeText(requireActivity(), "Такой элемент уже есть", Toast.LENGTH_LONG).show()
+            } else {
+                array.add(binding.edittextAddress.text.toString())
+                Toast.makeText(requireActivity(), "Добавлено в избранное", Toast.LENGTH_LONG).show()
+            }
         }
 
         binding.buttonCheckAvailability.setOnClickListener {
