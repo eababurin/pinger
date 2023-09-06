@@ -105,8 +105,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="top"
-                android:inputType="none"
                 android:longClickable="true"
+                android:inputType="textMultiLine"
+                android:scrollHorizontally="false"
                 android:scrollbars="vertical"
                 android:textIsSelectable="true" />
         </com.google.android.material.textfield.TextInputLayout>

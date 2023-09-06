@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
-import android.text.InputType
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -96,7 +95,7 @@ class MainFragment : Fragment() {
 
         super.onViewCreated(view, savedInstanceState)
 
-        binding.outputTextInputEditText.inputType = InputType.TYPE_NULL
+        binding.outputTextInputEditText.keyListener = null
 
         if (savedInstanceState != null) {
             if (savedInstanceState.containsKey(FAVOURITES_KEY)) {
