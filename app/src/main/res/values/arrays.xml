@@ -2,6 +2,18 @@
 <resources>
     <string-array name="kvms">
         <item>eababurin.ru</item>
-        <item>test.eababurin.ru</item>
+        <item>ms1.kvm.smailru.net</item>
+    </string-array>
+    
+    <string-array name="standard_count_of_echo_requests">
+        <item>1</item>
+        <item>4</item>
+        <item>10</item>
+    </string-array>
+
+    <string-array name="standard_interval_of_echo_requests">
+        <item>1</item>
+        <item>2</item>
+        <item>5</item>
     </string-array>
 </resources>

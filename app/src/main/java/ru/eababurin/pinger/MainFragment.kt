@@ -4,15 +4,17 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
-import android.view.*
-import android.widget.*
+import android.text.InputType
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.view.isVisible
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
-import ru.eababurin.pinger.databinding.FragmentMainBinding
-import java.net.InetAddress
+import ru.eababurin.pinger.databinding.FragmentMainNewBinding
 
 class MainFragment : Fragment() {
 
@@ -24,7 +26,7 @@ class MainFragment : Fragment() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var sharedPreferencesEditor: SharedPreferences.Editor
 
-    private var _binding: FragmentMainBinding? = null
+    private var _binding: FragmentMainNewBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var array : MutableList<String>
@@ -33,9 +35,10 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentMainBinding.inflate(inflater, container, false)
+        _binding = FragmentMainNewBinding.inflate(inflater, container, false)
 
-        (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
+        (activity as AppCompatActivity).setSupportActionBar(binding.topAppBar)
+
         setHasOptionsMenu(true)
 
         array = mutableListOf()
@@ -93,6 +96,8 @@ class MainFragment : Fragment() {
 
         super.onViewCreated(view, savedInstanceState)
 
+        binding.outputTextInputEditText.inputType = InputType.TYPE_NULL
+
         if (savedInstanceState != null) {
             if (savedInstanceState.containsKey(FAVOURITES_KEY)) {
                 array.addAll(savedInstanceState.getStringArray(FAVOURITES_KEY) as Array<out String>)
@@ -101,82 +106,82 @@ class MainFragment : Fragment() {
             }
         }
 
-        binding.spinnerFavoritesList.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
+//        binding.spinnerFavoritesList.onItemSelectedListener =
+//            object : AdapterView.OnItemSelectedListener {
+//
+//                override fun onNothingSelected(parent: AdapterView<*>?) {}
+//
+//                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+//                    if (array.isEmpty()) {
+//                        binding.edittextAddress.text.clear()
+//                    } else {
+//                        binding.edittextAddress.setText(
+//                            array[position],
+//                            TextView.BufferType.EDITABLE
+//                        )
+//                    }
+//                }
+//            }
 
-                override fun onNothingSelected(parent: AdapterView<*>?) {}
-
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    if (array.isEmpty()) {
-                        binding.edittextAddress.text.clear()
-                    } else {
-                        binding.edittextAddress.setText(
-                            array[position],
-                            TextView.BufferType.EDITABLE
-                        )
-                    }
-                }
-            }
-
-        binding.imagebuttonAddToFavorites.setOnClickListener {
-            if (binding.edittextAddress.text.isEmpty()) {
-                Toast.makeText(requireActivity(), "Введите адрес сервера", Toast.LENGTH_LONG).show()
-                return@setOnClickListener
-            }
-            if (array.contains(binding.edittextAddress.text.toString())) {
-                Toast.makeText(requireActivity(), "Такой элемент уже есть", Toast.LENGTH_LONG).show()
-            } else {
-                array.add(binding.edittextAddress.text.toString())
-                Toast.makeText(requireActivity(), "Добавлено в избранное", Toast.LENGTH_LONG).show()
-            }
-        }
-
-        binding.buttonCheckAvailability.setOnClickListener {
-            if (binding.edittextAddress.text.isEmpty()) {
-                Toast.makeText(requireContext(), "Введите адрес", Toast.LENGTH_LONG).show()
-            } else {
-                checkAddress(binding.edittextAddress.text.toString())
-            }
-        }
-
-        binding.edittextAddress.addTextChangedListener {
-            if (binding.textviewResult.isVisible) binding.textviewResult.visibility = View.INVISIBLE
-        }
-
-        binding.buttonClear.setOnClickListener {
-            if (binding.textviewResult.isVisible) binding.textviewResult.visibility = View.INVISIBLE
-            binding.edittextAddress.text.clear()
-            binding.spinnerFavoritesList.setSelection(array.size - 1, false)
-
-        }
+//        binding.imagebuttonAddToFavorites.setOnClickListener {
+//            if (binding.edittextAddress.text.isEmpty()) {
+//                Toast.makeText(requireActivity(), "Введите адрес сервера", Toast.LENGTH_LONG).show()
+//                return@setOnClickListener
+//            }
+//            if (array.contains(binding.edittextAddress.text.toString())) {
+//                Toast.makeText(requireActivity(), "Такой элемент уже есть", Toast.LENGTH_LONG).show()
+//            } else {
+//                array.add(binding.edittextAddress.text.toString())
+//                Toast.makeText(requireActivity(), "Добавлено в избранное", Toast.LENGTH_LONG).show()
+//            }
+//        }
+//
+//        binding.buttonCheckAvailability.setOnClickListener {
+//            if (binding.edittextAddress.text.isEmpty()) {
+//                Toast.makeText(requireContext(), "Введите адрес", Toast.LENGTH_LONG).show()
+//            } else {
+//                checkAddress(binding.edittextAddress.text.toString())
+//            }
+//        }
+//
+//        binding.edittextAddress.addTextChangedListener {
+//            if (binding.textviewResult.isVisible) binding.textviewResult.visibility = View.INVISIBLE
+//        }
+//
+//        binding.buttonClear.setOnClickListener {
+//            if (binding.textviewResult.isVisible) binding.textviewResult.visibility = View.INVISIBLE
+//            binding.edittextAddress.text.clear()
+//            binding.spinnerFavoritesList.setSelection(array.size - 1, false)
+//
+//        }
     }
 
-    private fun checkAddress(host: String) {
-        if (binding.textviewResult.isVisible) binding.textviewResult.visibility = View.INVISIBLE
-
-        Thread {
-            try {
-                val address: InetAddress = InetAddress.getByName(host)
-                val isReachable = address.isReachable(1000)
-
-                if (isReachable) {
-                    requireActivity().runOnUiThread {
-                        binding.textviewResult.apply {
-                            text = "Сервер доступен"
-                            setTextColor(resources.getColor(R.color.server_is_available, null))
-                            visibility = View.VISIBLE
-                        }
-                    }
-                }
-            } catch (e: Exception) {
-                requireActivity().runOnUiThread {
-                    binding.textviewResult.apply {
-                        text = "Сервер недоступен"
-                        setTextColor(resources.getColor(R.color.server_is_unavailable, null))
-                        visibility = View.VISIBLE
-                    }
-                }
-            }
-        }.start()
-    }
+//    private fun checkAddress(host: String) {
+//        if (binding.textviewResult.isVisible) binding.textviewResult.visibility = View.INVISIBLE
+//
+//        Thread {
+//            try {
+//                val address: InetAddress = InetAddress.getByName(host)
+//                val isReachable = address.isReachable(1000)
+//
+//                if (isReachable) {
+//                    requireActivity().runOnUiThread {
+//                        binding.textviewResult.apply {
+//                            text = "Сервер доступен"
+//                            setTextColor(resources.getColor(R.color.server_is_available, null))
+//                            visibility = View.VISIBLE
+//                        }
+//                    }
+//                }
+//            } catch (e: Exception) {
+//                requireActivity().runOnUiThread {
+//                    binding.textviewResult.apply {
+//                        text = "Сервер недоступен"
+//                        setTextColor(resources.getColor(R.color.server_is_unavailable, null))
+//                        visibility = View.VISIBLE
+//                    }
+//                }
+//            }
+//        }.start()
+//    }
 }

@@ -5,4 +5,12 @@
     <string name="change_theme">Сменить тему</string>
     <string name="button_check_availability">Проверить доступность</string>
     <string name="button_clear">Очистить</string>
+    <string name="clear_button">Очистить</string>
+    <string name="send_request">Отправить</string>
+    <string name="result">Результат</string>
+    <string name="default_interval">1</string>
+    <string name="interval">Интервал запросов</string>
+    <string name="default_count">4</string>
+    <string name="count_requests">Количество запросов</string>
+    <string name="hostname">Адрес хоста</string>
 </resources>

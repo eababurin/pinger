@@ -1,16 +1,16 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.Pinger" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
+    <style name="Theme.Pinger" parent="Theme.Material3.DayNight.NoActionBar">
+    <!-- Primary brand color.
         <item name="colorPrimary">@color/light_bluegrey_primary</item>
         <item name="colorPrimaryVariant">@color/light_bluegrey_light</item>
         <item name="colorOnPrimary">@color/light_bluegrey_dark</item>
-        <!-- Secondary brand color. -->
+         Secondary brand color.
         <item name="colorSecondary">@color/light_indigo_secondary</item>
         <item name="colorSecondaryVariant">@color/light_indigo_light</item>
         <item name="colorOnSecondary">@color/light_indigo_dark</item>
-        <!-- Status bar color. -->
+         Status bar color.
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+         Customize your theme here. -->
     </style>
 </resources>
