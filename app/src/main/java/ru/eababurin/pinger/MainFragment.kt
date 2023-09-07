@@ -10,43 +10,40 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
-import ru.eababurin.pinger.databinding.FragmentMainNewBinding
+import com.google.android.material.snackbar.Snackbar
+import ru.eababurin.pinger.databinding.FragmentMainBinding
+
 
 class MainFragment : Fragment() {
 
     companion object {
-        const val FAVOURITES_KEY = "Favourites"
-        const val THEME_KEY = "Theme"
+        const val KEY_THEME = "Theme"
     }
 
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var sharedPreferencesEditor: SharedPreferences.Editor
 
-    private var _binding: FragmentMainNewBinding? = null
-    private val binding get() = _binding!!
-
-    private lateinit var array : MutableList<String>
+    private var _ui: FragmentMainBinding? = null
+    private val ui get() = _ui!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentMainNewBinding.inflate(inflater, container, false)
+        _ui = FragmentMainBinding.inflate(inflater, container, false)
 
-        (activity as AppCompatActivity).setSupportActionBar(binding.topAppBar)
-
+        (activity as AppCompatActivity).setSupportActionBar(ui.topAppBar)
         setHasOptionsMenu(true)
 
-        array = mutableListOf()
-
-        return binding.root
+        return ui.root
     }
 
     override fun onDestroy() {
-        _binding = null
+        _ui = null
         super.onDestroy()
     }
 
@@ -57,9 +54,7 @@ class MainFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.options_menu_change_theme -> {
-                changeTheme()
-            }
+            R.id.options_menu_change_theme -> changeTheme()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -68,11 +63,11 @@ class MainFragment : Fragment() {
         when (requireActivity().resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
             Configuration.UI_MODE_NIGHT_NO -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                sharedPreferencesEditor.putInt(THEME_KEY, Configuration.UI_MODE_NIGHT_YES)
+                sharedPreferencesEditor.putInt(KEY_THEME, Configuration.UI_MODE_NIGHT_YES)
             }
             Configuration.UI_MODE_NIGHT_YES -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                sharedPreferencesEditor.putInt(THEME_KEY, Configuration.UI_MODE_NIGHT_NO)
+                sharedPreferencesEditor.putInt(KEY_THEME, Configuration.UI_MODE_NIGHT_NO)
             }
         }
         sharedPreferencesEditor.commit()
@@ -80,107 +75,72 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        sharedPreferences = requireActivity().getSharedPreferences(THEME_KEY, Context.MODE_PRIVATE)
+        sharedPreferences = requireActivity().getSharedPreferences(KEY_THEME, Context.MODE_PRIVATE)
         sharedPreferencesEditor = sharedPreferences.edit()
 
         if (Configuration.UI_MODE_NIGHT_YES == sharedPreferences.getInt(
-                THEME_KEY,
+                KEY_THEME,
                 Configuration.UI_MODE_NIGHT_NO
             )
-        ) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        }
+        ) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         super.onViewCreated(view, savedInstanceState)
 
-        binding.outputTextInputEditText.keyListener = null
+        ui.outputTextInputEditText.keyListener = null
 
-        if (savedInstanceState != null) {
-            if (savedInstanceState.containsKey(FAVOURITES_KEY)) {
-                array.addAll(savedInstanceState.getStringArray(FAVOURITES_KEY) as Array<out String>)
-
-//                val spinnerAdapter : SpinnerAdapter = ArrayAdapter.createFromResource(requireContext(), array, android.R.layout.simple_spinner_item)
+        ui.pingButton.setOnClickListener {
+            if (ui.hostnameTextInputEditText.text!!.isEmpty()) {
+                Toast.makeText(requireActivity(), "Напиши адрес хоста!", Toast.LENGTH_SHORT).show()
+            } else {
+                sendRequest(
+                    ui.hostnameTextInputEditText.text.toString(),
+                    ui.countRequestsAutoCompleteTextView.text.toString(),
+                    ui.intervalRequestsAutoCompleteTextView.text.toString()
+                )
             }
         }
 
-//        binding.spinnerFavoritesList.onItemSelectedListener =
-//            object : AdapterView.OnItemSelectedListener {
-//
-//                override fun onNothingSelected(parent: AdapterView<*>?) {}
-//
-//                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-//                    if (array.isEmpty()) {
-//                        binding.edittextAddress.text.clear()
-//                    } else {
-//                        binding.edittextAddress.setText(
-//                            array[position],
-//                            TextView.BufferType.EDITABLE
-//                        )
-//                    }
-//                }
-//            }
-
-//        binding.imagebuttonAddToFavorites.setOnClickListener {
-//            if (binding.edittextAddress.text.isEmpty()) {
-//                Toast.makeText(requireActivity(), "Введите адрес сервера", Toast.LENGTH_LONG).show()
-//                return@setOnClickListener
-//            }
-//            if (array.contains(binding.edittextAddress.text.toString())) {
-//                Toast.makeText(requireActivity(), "Такой элемент уже есть", Toast.LENGTH_LONG).show()
-//            } else {
-//                array.add(binding.edittextAddress.text.toString())
-//                Toast.makeText(requireActivity(), "Добавлено в избранное", Toast.LENGTH_LONG).show()
-//            }
-//        }
-//
-//        binding.buttonCheckAvailability.setOnClickListener {
-//            if (binding.edittextAddress.text.isEmpty()) {
-//                Toast.makeText(requireContext(), "Введите адрес", Toast.LENGTH_LONG).show()
-//            } else {
-//                checkAddress(binding.edittextAddress.text.toString())
-//            }
-//        }
-//
-//        binding.edittextAddress.addTextChangedListener {
-//            if (binding.textviewResult.isVisible) binding.textviewResult.visibility = View.INVISIBLE
-//        }
-//
-//        binding.buttonClear.setOnClickListener {
-//            if (binding.textviewResult.isVisible) binding.textviewResult.visibility = View.INVISIBLE
-//            binding.edittextAddress.text.clear()
-//            binding.spinnerFavoritesList.setSelection(array.size - 1, false)
-//
-//        }
+        ui.clearButton.setOnClickListener {
+            ui.outputTextInputEditText.text!!.clear()
+            ui.hostnameTextInputEditText.text!!.clear()
+        }
     }
 
-//    private fun checkAddress(host: String) {
-//        if (binding.textviewResult.isVisible) binding.textviewResult.visibility = View.INVISIBLE
-//
-//        Thread {
-//            try {
-//                val address: InetAddress = InetAddress.getByName(host)
-//                val isReachable = address.isReachable(1000)
-//
-//                if (isReachable) {
-//                    requireActivity().runOnUiThread {
-//                        binding.textviewResult.apply {
-//                            text = "Сервер доступен"
-//                            setTextColor(resources.getColor(R.color.server_is_available, null))
-//                            visibility = View.VISIBLE
-//                        }
-//                    }
-//                }
-//            } catch (e: Exception) {
-//                requireActivity().runOnUiThread {
-//                    binding.textviewResult.apply {
-//                        text = "Сервер недоступен"
-//                        setTextColor(resources.getColor(R.color.server_is_unavailable, null))
-//                        visibility = View.VISIBLE
-//                    }
-//                }
-//            }
-//        }.start()
-//    }
+    private fun sendRequest(hostname: String, counts: String, interval: String) {
+        val inputCommand = mutableListOf("ping", "-c", counts, "-i", interval, hostname)
+
+        Thread {
+            val process = ProcessBuilder().command(inputCommand).start()
+            val stdOutput = process.inputStream.bufferedReader()
+            val stdErrOuput = process.errorStream.bufferedReader()
+
+            try {
+                while (true) {
+                    val stdLine = stdOutput.readLine()
+                    if (stdLine != null) {
+                        requireActivity().runOnUiThread {
+                            ui.outputTextInputEditText.text?.appendLine(stdLine)
+                        }
+                    } else {
+                        val errLine = stdErrOuput.readLine()
+                        if (errLine != null) {
+                            requireActivity().runOnUiThread {
+                                ui.outputTextInputEditText.text?.appendLine(errLine)
+                            }
+                            break
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                requireActivity().runOnUiThread {
+                    Snackbar.make(ui.layout, R.string.unknown_error, Snackbar.LENGTH_SHORT).show()
+                }
+            } finally {
+                process.destroy()
+            }
+        }.start()
+    }
 }
+
+
