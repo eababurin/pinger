@@ -1,5 +1,7 @@
 package ru.eababurin.pinger
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Configuration
@@ -16,6 +18,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputEditText
 import ru.eababurin.pinger.databinding.FragmentMainBinding
 
 
@@ -111,10 +114,33 @@ class MainFragment : Fragment() {
         else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         ui.outputTextInputEditText.keyListener = null
+        ui.outputTextInputEditText.setOnLongClickListener {
+            if (ui.outputTextInputEditText.text!!.isEmpty())
+                false
+            else {
+                val clipboardManager =
+                    requireActivity().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                val clipData =
+                    ClipData.newPlainText(null, (it as TextInputEditText).text.toString())
+                clipboardManager.setPrimaryClip(clipData)
+
+                Snackbar.make(
+                    ui.layout,
+                    requireActivity().resources.getString(R.string.output_was_copied),
+                    Snackbar.ANIMATION_MODE_FADE
+                ).show()
+
+                true
+            }
+        }
 
         ui.pingButton.setOnClickListener {
             if (ui.hostnameTextInputEditText.text!!.isEmpty()) {
-                Snackbar.make(ui.layout, resources.getString(R.string.hostname_not_filled), Snackbar.ANIMATION_MODE_FADE).show()
+                Snackbar.make(
+                    ui.layout,
+                    resources.getString(R.string.hostname_not_filled),
+                    Snackbar.ANIMATION_MODE_FADE
+                ).show()
             } else {
                 mainViewModel.ping(
                     ui.hostnameTextInputEditText.text.toString(),
