@@ -4,16 +4,17 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import ru.eababurin.pinger.databinding.FragmentMainBinding
 
@@ -30,6 +31,8 @@ class MainFragment : Fragment() {
     private var _ui: FragmentMainBinding? = null
     private val ui get() = _ui!!
 
+    private lateinit var mainViewModel: MainViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,6 +41,7 @@ class MainFragment : Fragment() {
 
         (activity as AppCompatActivity).setSupportActionBar(ui.topAppBar)
         setHasOptionsMenu(true)
+        mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
 
         return ui.root
     }
@@ -65,6 +69,7 @@ class MainFragment : Fragment() {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 sharedPreferencesEditor.putInt(KEY_THEME, Configuration.UI_MODE_NIGHT_YES)
             }
+
             Configuration.UI_MODE_NIGHT_YES -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                 sharedPreferencesEditor.putInt(KEY_THEME, Configuration.UI_MODE_NIGHT_NO)
@@ -74,6 +79,26 @@ class MainFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        mainViewModel.run {
+            mutableOutput.observe(viewLifecycleOwner) {
+                val list = it.joinToString("\n")
+                ui.outputTextInputEditText.text = Editable.Factory.getInstance().newEditable(list)
+            }
+            pingError.observe(viewLifecycleOwner) {
+                Snackbar.make(ui.layout, it, Snackbar.LENGTH_SHORT).show()
+            }
+            requestHostname.observe(viewLifecycleOwner) {
+                ui.hostnameTextInputEditText.setText(it)
+            }
+            requestCount.observe(viewLifecycleOwner) {
+                ui.countRequestsAutoCompleteTextView.setText(it)
+            }
+            requestInterval.observe(viewLifecycleOwner) {
+                ui.intervalRequestsAutoCompleteTextView.setText(it)
+            }
+        }
 
         sharedPreferences = requireActivity().getSharedPreferences(KEY_THEME, Context.MODE_PRIVATE)
         sharedPreferencesEditor = sharedPreferences.edit()
@@ -85,15 +110,13 @@ class MainFragment : Fragment() {
         ) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
-        super.onViewCreated(view, savedInstanceState)
-
         ui.outputTextInputEditText.keyListener = null
 
         ui.pingButton.setOnClickListener {
             if (ui.hostnameTextInputEditText.text!!.isEmpty()) {
-                Toast.makeText(requireActivity(), "Напиши адрес хоста!", Toast.LENGTH_SHORT).show()
+                Snackbar.make(ui.layout, resources.getString(R.string.hostname_not_filled), Snackbar.ANIMATION_MODE_FADE).show()
             } else {
-                sendRequest(
+                mainViewModel.ping(
                     ui.hostnameTextInputEditText.text.toString(),
                     ui.countRequestsAutoCompleteTextView.text.toString(),
                     ui.intervalRequestsAutoCompleteTextView.text.toString()
@@ -104,42 +127,21 @@ class MainFragment : Fragment() {
         ui.clearButton.setOnClickListener {
             ui.outputTextInputEditText.text!!.clear()
             ui.hostnameTextInputEditText.text!!.clear()
+            ui.countRequestsAutoCompleteTextView.text!!.clear()
+            ui.intervalRequestsAutoCompleteTextView.text!!.clear()
+
+            mainViewModel.listOfOutput.clear()
         }
     }
 
-    private fun sendRequest(hostname: String, counts: String, interval: String) {
-        val inputCommand = mutableListOf("ping", "-c", counts, "-i", interval, hostname)
+    override fun onPause() {
+        super.onPause()
 
-        Thread {
-            val process = ProcessBuilder().command(inputCommand).start()
-            val stdOutput = process.inputStream.bufferedReader()
-            val stdErrOuput = process.errorStream.bufferedReader()
-
-            try {
-                while (true) {
-                    val stdLine = stdOutput.readLine()
-                    if (stdLine != null) {
-                        requireActivity().runOnUiThread {
-                            ui.outputTextInputEditText.text?.appendLine(stdLine)
-                        }
-                    } else {
-                        val errLine = stdErrOuput.readLine()
-                        if (errLine != null) {
-                            requireActivity().runOnUiThread {
-                                ui.outputTextInputEditText.text?.appendLine(errLine)
-                            }
-                            break
-                        }
-                    }
-                }
-            } catch (e: Exception) {
-                requireActivity().runOnUiThread {
-                    Snackbar.make(ui.layout, R.string.unknown_error, Snackbar.LENGTH_SHORT).show()
-                }
-            } finally {
-                process.destroy()
-            }
-        }.start()
+        mainViewModel.run {
+            requestHostname.value = ui.hostnameTextInputEditText.text.toString()
+            requestCount.value = ui.countRequestsAutoCompleteTextView.text.toString()
+            requestInterval.value = ui.intervalRequestsAutoCompleteTextView.text.toString()
+        }
     }
 }
 

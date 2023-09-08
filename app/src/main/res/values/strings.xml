@@ -14,4 +14,5 @@
     <string name="count_requests">Количество запросов</string>
     <string name="hostname">Адрес хоста</string>
     <string name="unknown_error">Произошла неизвестная ошибка</string>
+    <string name="hostname_not_filled">Адрес не указан</string>
 </resources>
