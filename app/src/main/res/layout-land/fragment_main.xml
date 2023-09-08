@@ -45,7 +45,9 @@
                 android:id="@+id/hostnameTextInputEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textUri" />
+                android:imeOptions="actionNext"
+                android:inputType="textUri"
+                android:nextFocusForward="@id/countRequestsAutoCompleteTextView" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -64,7 +66,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/count_requests"
+                android:imeOptions="actionNext"
                 android:inputType="number"
+                android:nextFocusForward="@id/intervalRequestsAutoCompleteTextView"
                 android:text="@string/default_count"
                 app:simpleItems="@array/standard_count_of_echo_requests" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -76,66 +80,69 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:hint="@string/interval"
+            android:imeOptions="actionNext"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/countRequestsTextInputLayout"
             app:layout_constraintTop_toTopOf="parent">
 
-        <AutoCompleteTextView
-            android:id="@+id/intervalRequestsAutoCompleteTextView"
+            <AutoCompleteTextView
+                android:id="@+id/intervalRequestsAutoCompleteTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionDone"
+                android:inputType="number"
+                android:text="@string/default_interval"
+                app:simpleItems="@array/standard_interval_of_echo_requests" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/outputTextInputLayout"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="8dp"
+            android:hint="@string/result"
+            app:layout_constraintBottom_toTopOf="@id/pingButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/countRequestsTextInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/outputTextInputEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="top"
+                android:inputType="textMultiLine"
+                android:longClickable="true"
+                android:scrollbars="vertical|horizontal"
+                android:scrollHorizontally="false"
+                android:textIsSelectable="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/pingButton"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:text="@string/default_interval"
-            app:simpleItems="@array/standard_interval_of_echo_requests" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_margin="8dp"
+            android:text="@string/send_request"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/clearButton"
+            app:layout_constraintHorizontal_weight="2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/outputTextInputLayout" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/outputTextInputLayout"
-        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="8dp"
-        android:hint="@string/result"
-        app:layout_constraintBottom_toTopOf="@id/pingButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/countRequestsTextInputLayout">
+        <Button
+            android:id="@+id/clearButton"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="@string/clear_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@id/pingButton"
+            app:layout_constraintTop_toBottomOf="@id/outputTextInputLayout" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/outputTextInputEditText"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="top"
-            android:inputType="textMultiLine"
-            android:longClickable="true"
-            android:scrollbars="vertical|horizontal"
-            android:scrollHorizontally="false"
-            android:textIsSelectable="true" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <Button
-        android:id="@+id/pingButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="@string/send_request"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/clearButton"
-        app:layout_constraintHorizontal_weight="2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/outputTextInputLayout" />
-
-    <Button
-        android:id="@+id/clearButton"
-        style="@style/Widget.Material3.Button.OutlinedButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="@string/clear_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintStart_toEndOf="@id/pingButton"
-        app:layout_constraintTop_toBottomOf="@id/outputTextInputLayout" />
-
-</androidx.constraintlayout.widget.ConstraintLayout></LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
