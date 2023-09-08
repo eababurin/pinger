@@ -3,18 +3,14 @@ package ru.eababurin.pinger
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import android.content.SharedPreferences
-import android.content.res.Configuration
 import android.os.Bundle
 import android.text.Editable
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
@@ -24,21 +20,13 @@ import ru.eababurin.pinger.databinding.FragmentMainBinding
 
 class MainFragment : Fragment() {
 
-    companion object {
-        const val KEY_THEME = "Theme"
-    }
-
-    private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var sharedPreferencesEditor: SharedPreferences.Editor
-
     private var _ui: FragmentMainBinding? = null
     private val ui get() = _ui!!
 
     private lateinit var mainViewModel: MainViewModel
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _ui = FragmentMainBinding.inflate(inflater, container, false)
 
@@ -59,27 +47,12 @@ class MainFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.options_menu_change_theme -> changeTheme()
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-    private fun changeTheme() {
-        when (requireActivity().resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
-            Configuration.UI_MODE_NIGHT_NO -> {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                sharedPreferencesEditor.putInt(KEY_THEME, Configuration.UI_MODE_NIGHT_YES)
-            }
-
-            Configuration.UI_MODE_NIGHT_YES -> {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                sharedPreferencesEditor.putInt(KEY_THEME, Configuration.UI_MODE_NIGHT_NO)
-            }
-        }
-        sharedPreferencesEditor.commit()
-    }
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        when (item.itemId) {
+//            R.id.options_menu_change_theme -> changeTheme()
+//        }
+//        return super.onOptionsItemSelected(item)
+//    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -103,20 +76,9 @@ class MainFragment : Fragment() {
             }
         }
 
-        sharedPreferences = requireActivity().getSharedPreferences(KEY_THEME, Context.MODE_PRIVATE)
-        sharedPreferencesEditor = sharedPreferences.edit()
-
-        if (Configuration.UI_MODE_NIGHT_YES == sharedPreferences.getInt(
-                KEY_THEME,
-                Configuration.UI_MODE_NIGHT_NO
-            )
-        ) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-
         ui.outputTextInputEditText.keyListener = null
         ui.outputTextInputEditText.setOnLongClickListener {
-            if (ui.outputTextInputEditText.text!!.isEmpty())
-                false
+            if (ui.outputTextInputEditText.text!!.isEmpty()) false
             else {
                 val clipboardManager =
                     requireActivity().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
@@ -157,6 +119,8 @@ class MainFragment : Fragment() {
             ui.intervalRequestsAutoCompleteTextView.text!!.clear()
 
             mainViewModel.listOfOutput.clear()
+
+            //(requireActivity() as MainActivity).changeTheme()
         }
     }
 
