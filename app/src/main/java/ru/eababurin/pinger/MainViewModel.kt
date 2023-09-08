@@ -16,6 +16,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun ping(hostname: String, counts: String, interval: String) {
         Thread {
+
+            if (!listOfOutput.isEmpty())
+                listOfOutput.addAll(listOf("\n", "# # # # # # # # # #", "\n"))
+
             val inputCommand = mutableListOf<String>()
 
             if (counts == "∞") inputCommand.addAll(listOf("ping", "-i", interval, hostname))
