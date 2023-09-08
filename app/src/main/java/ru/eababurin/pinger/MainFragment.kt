@@ -179,16 +179,18 @@ class MainFragment : Fragment() {
         }
 
         ui.pingButton.setOnClickListener {
-            if (ui.hostnameTextInputLayout.isErrorEnabled || ui.countRequestsTextInputLayout.isErrorEnabled || ui.outputTextInputLayout.isErrorEnabled) Snackbar.make(
-                ui.layout,
-                resources.getString(R.string.check_fields_are_filled_in),
-                Snackbar.ANIMATION_MODE_FADE
-            ).show()
-            else mainViewModel.ping(
-                ui.hostnameTextInputEditText.text.toString(),
-                ui.countRequestsAutoCompleteTextView.text.toString(),
-                ui.intervalRequestsAutoCompleteTextView.text.toString()
-            )
+            if ((ui.hostnameTextInputEditText.error == null) && (ui.countRequestsAutoCompleteTextView.error == null) && (ui.intervalRequestsAutoCompleteTextView.error == null))
+                mainViewModel.ping(
+                    ui.hostnameTextInputEditText.text.toString(),
+                    ui.countRequestsAutoCompleteTextView.text.toString(),
+                    ui.intervalRequestsAutoCompleteTextView.text.toString()
+                )
+            else
+                Snackbar.make(
+                    ui.layout,
+                    resources.getString(R.string.check_fields_are_filled_in),
+                    Snackbar.ANIMATION_MODE_FADE
+                ).show()
         }
 
         ui.clearButton.setOnClickListener {

@@ -117,6 +117,7 @@
                 android:gravity="top"
                 android:inputType="textMultiLine"
                 android:longClickable="true"
+                android:nextFocusForward="@id/pingButton"
                 android:scrollbars="vertical|horizontal"
                 android:scrollHorizontally="false"
                 android:textIsSelectable="true" />
