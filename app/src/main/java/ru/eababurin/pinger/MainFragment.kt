@@ -159,6 +159,13 @@ class MainFragment : Fragment() {
         })
 
         ui.outputTextInputEditText.keyListener = null
+        ui.outputTextInputEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun afterTextChanged(p0: Editable?) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                ui.outputTextInputEditText.setSelection(p0!!.length)
+            }
+        })
         ui.outputTextInputEditText.setOnLongClickListener {
             if (ui.outputTextInputEditText.text!!.isEmpty()) false
             else {
