@@ -6,6 +6,7 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -85,36 +86,13 @@ class MainFragment : Fragment() {
                         ui.hostnameTextInputEditText.error =
                             requireActivity().resources.getString(R.string.error_field_cannot_be_empty)
                         ui.hostnameTextInputLayout.endIconMode = TextInputLayout.END_ICON_NONE
+                        Log.d("TEST", "Меняем в onFocusChangeListener -> hasFocus")
                     } else {
                         ui.hostnameTextInputEditText.error = null
                         ui.hostnameTextInputLayout.endIconMode = TextInputLayout.END_ICON_CLEAR_TEXT
                     }
                 }
             }
-        ui.hostnameTextInputEditText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun afterTextChanged(p0: Editable?) {
-                if ((ui.hostnameTextInputEditText.text.isNullOrBlank())) {
-                    ui.hostnameTextInputEditText.error =
-                        requireActivity().resources.getString(R.string.error_field_cannot_be_empty)
-                    ui.hostnameTextInputLayout.endIconMode = TextInputLayout.END_ICON_NONE
-                } else {
-                    ui.hostnameTextInputEditText.error = null
-                    ui.hostnameTextInputLayout.endIconMode = TextInputLayout.END_ICON_CLEAR_TEXT
-                }
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if ((ui.hostnameTextInputEditText.text.isNullOrBlank())) {
-                    ui.hostnameTextInputEditText.error =
-                        requireActivity().resources.getString(R.string.error_field_cannot_be_empty)
-                    ui.hostnameTextInputLayout.endIconMode = TextInputLayout.END_ICON_NONE
-                } else {
-                    ui.hostnameTextInputEditText.error = null
-                    ui.hostnameTextInputLayout.endIconMode = TextInputLayout.END_ICON_CLEAR_TEXT
-                }
-            }
-        })
 
         ui.countRequestsAutoCompleteTextView.onFocusChangeListener =
             View.OnFocusChangeListener { _, hasFocus ->
@@ -124,18 +102,6 @@ class MainFragment : Fragment() {
                     else ui.countRequestsAutoCompleteTextView.error = null
                 }
             }
-        ui.countRequestsAutoCompleteTextView.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun afterTextChanged(p0: Editable?) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if ((s.isNullOrBlank()) || (s.toString() == "0")) {
-                    ui.countRequestsAutoCompleteTextView.error =
-                        requireActivity().resources.getString(R.string.error_less_than_zero)
-                } else {
-                    ui.countRequestsAutoCompleteTextView.error = null
-                }
-            }
-        })
 
         ui.intervalRequestsAutoCompleteTextView.onFocusChangeListener =
             View.OnFocusChangeListener { _, hasFocus ->
@@ -145,18 +111,6 @@ class MainFragment : Fragment() {
                     else ui.intervalRequestsAutoCompleteTextView.error = null
                 }
             }
-        ui.intervalRequestsAutoCompleteTextView.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun afterTextChanged(p0: Editable?) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if ((s.isNullOrBlank()) || (s.toString() == "0")) {
-                    ui.intervalRequestsAutoCompleteTextView.error =
-                        requireActivity().resources.getString(R.string.error_less_than_zero)
-                } else {
-                    ui.intervalRequestsAutoCompleteTextView.error = null
-                }
-            }
-        })
 
         ui.outputTextInputEditText.keyListener = null
         ui.outputTextInputEditText.addTextChangedListener(object : TextWatcher {
