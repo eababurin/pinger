@@ -5,6 +5,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -15,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import ru.eababurin.pinger.databinding.FragmentMainBinding
 
 
@@ -47,12 +49,12 @@ class MainFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        when (item.itemId) {
-//            R.id.options_menu_change_theme -> changeTheme()
-//        }
-//        return super.onOptionsItemSelected(item)
-//    }
+    /*    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+            when (item.itemId) {
+                R.id.options_menu_change_theme -> changeTheme()
+            }
+            return super.onOptionsItemSelected(item)
+        }*/
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -76,6 +78,86 @@ class MainFragment : Fragment() {
             }
         }
 
+        ui.hostnameTextInputEditText.onFocusChangeListener =
+            View.OnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    if (ui.hostnameTextInputEditText.text.isNullOrBlank()) {
+                        ui.hostnameTextInputEditText.error =
+                            requireActivity().resources.getString(R.string.error_field_cannot_be_empty)
+                        ui.hostnameTextInputLayout.endIconMode = TextInputLayout.END_ICON_NONE
+                    } else {
+                        ui.hostnameTextInputEditText.error = null
+                        ui.hostnameTextInputLayout.endIconMode = TextInputLayout.END_ICON_CLEAR_TEXT
+                    }
+                }
+            }
+        ui.hostnameTextInputEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun afterTextChanged(p0: Editable?) {
+                if ((ui.hostnameTextInputEditText.text.isNullOrBlank())) {
+                    ui.hostnameTextInputEditText.error =
+                        requireActivity().resources.getString(R.string.error_field_cannot_be_empty)
+                    ui.hostnameTextInputLayout.endIconMode = TextInputLayout.END_ICON_NONE
+                } else {
+                    ui.hostnameTextInputEditText.error = null
+                    ui.hostnameTextInputLayout.endIconMode = TextInputLayout.END_ICON_CLEAR_TEXT
+                }
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if ((ui.hostnameTextInputEditText.text.isNullOrBlank())) {
+                    ui.hostnameTextInputEditText.error =
+                        requireActivity().resources.getString(R.string.error_field_cannot_be_empty)
+                    ui.hostnameTextInputLayout.endIconMode = TextInputLayout.END_ICON_NONE
+                } else {
+                    ui.hostnameTextInputEditText.error = null
+                    ui.hostnameTextInputLayout.endIconMode = TextInputLayout.END_ICON_CLEAR_TEXT
+                }
+            }
+        })
+
+        ui.countRequestsAutoCompleteTextView.onFocusChangeListener =
+            View.OnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    if (ui.countRequestsAutoCompleteTextView.text.isNullOrBlank()) ui.countRequestsAutoCompleteTextView.error =
+                        requireActivity().resources.getString(R.string.error_less_than_zero)
+                    else ui.countRequestsAutoCompleteTextView.error = null
+                }
+            }
+        ui.countRequestsAutoCompleteTextView.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun afterTextChanged(p0: Editable?) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if ((s.isNullOrBlank()) || (s.toString() == "0")) {
+                    ui.countRequestsAutoCompleteTextView.error =
+                        requireActivity().resources.getString(R.string.error_less_than_zero)
+                } else {
+                    ui.countRequestsAutoCompleteTextView.error = null
+                }
+            }
+        })
+
+        ui.intervalRequestsAutoCompleteTextView.onFocusChangeListener =
+            View.OnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    if (ui.intervalRequestsAutoCompleteTextView.text.isNullOrBlank()) ui.intervalRequestsAutoCompleteTextView.error =
+                        requireActivity().resources.getString(R.string.error_less_than_zero)
+                    else ui.intervalRequestsAutoCompleteTextView.error = null
+                }
+            }
+        ui.intervalRequestsAutoCompleteTextView.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun afterTextChanged(p0: Editable?) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if ((s.isNullOrBlank()) || (s.toString() == "0")) {
+                    ui.intervalRequestsAutoCompleteTextView.error =
+                        requireActivity().resources.getString(R.string.error_less_than_zero)
+                } else {
+                    ui.intervalRequestsAutoCompleteTextView.error = null
+                }
+            }
+        })
+
         ui.outputTextInputEditText.keyListener = null
         ui.outputTextInputEditText.setOnLongClickListener {
             if (ui.outputTextInputEditText.text!!.isEmpty()) false
@@ -97,26 +179,30 @@ class MainFragment : Fragment() {
         }
 
         ui.pingButton.setOnClickListener {
-            if (ui.hostnameTextInputEditText.text!!.isEmpty()) {
-                Snackbar.make(
-                    ui.layout,
-                    resources.getString(R.string.hostname_not_filled),
-                    Snackbar.ANIMATION_MODE_FADE
-                ).show()
-            } else {
-                mainViewModel.ping(
-                    ui.hostnameTextInputEditText.text.toString(),
-                    ui.countRequestsAutoCompleteTextView.text.toString(),
-                    ui.intervalRequestsAutoCompleteTextView.text.toString()
-                )
-            }
+            if (ui.hostnameTextInputLayout.isErrorEnabled || ui.countRequestsTextInputLayout.isErrorEnabled || ui.outputTextInputLayout.isErrorEnabled) Snackbar.make(
+                ui.layout,
+                resources.getString(R.string.check_fields_are_filled_in),
+                Snackbar.ANIMATION_MODE_FADE
+            ).show()
+            else mainViewModel.ping(
+                ui.hostnameTextInputEditText.text.toString(),
+                ui.countRequestsAutoCompleteTextView.text.toString(),
+                ui.intervalRequestsAutoCompleteTextView.text.toString()
+            )
         }
 
         ui.clearButton.setOnClickListener {
-            ui.outputTextInputEditText.text!!.clear()
             ui.hostnameTextInputEditText.text!!.clear()
+            ui.hostnameTextInputEditText.error = null
+
+            ui.countRequestsAutoCompleteTextView.error =null
             ui.countRequestsAutoCompleteTextView.text!!.clear()
+
+            ui.intervalRequestsAutoCompleteTextView.error = null
             ui.intervalRequestsAutoCompleteTextView.text!!.clear()
+
+            ui.outputTextInputEditText.text!!.clear()
+            ui.outputTextInputEditText.error = null
 
             mainViewModel.listOfOutput.clear()
 

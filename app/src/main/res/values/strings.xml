@@ -16,4 +16,7 @@
     <string name="unknown_error">Произошла неизвестная ошибка</string>
     <string name="hostname_not_filled">Адрес не указан</string>
     <string name="output_was_copied">Вывод скопирован в буфер обмена</string>
+    <string name="error_less_than_zero">Должно быть больше 0</string>
+    <string name="error_field_cannot_be_empty">Поле не может быть пустым</string>
+    <string name="check_fields_are_filled_in">Проверьте заполняемость полей</string>
 </resources>

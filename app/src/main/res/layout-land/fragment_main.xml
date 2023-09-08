@@ -36,7 +36,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:hint="@string/hostname"
-            app:endIconMode="clear_text"
+            app:errorContentDescription="@string/error_field_cannot_be_empty"
+            app:errorEnabled="true"
             app:layout_constraintEnd_toStartOf="@id/countRequestsTextInputLayout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -57,6 +58,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:hint="@string/count_requests"
+            app:errorContentDescription="@string/error_field_cannot_be_empty"
+            app:errorEnabled="true"
             app:layout_constraintEnd_toStartOf="@id/intervalRequestsTextInputLayout"
             app:layout_constraintStart_toEndOf="@id/hostnameTextInputLayout"
             app:layout_constraintTop_toTopOf="parent">
@@ -69,7 +72,6 @@
                 android:imeOptions="actionNext"
                 android:inputType="number"
                 android:nextFocusForward="@id/intervalRequestsAutoCompleteTextView"
-                android:text="@string/default_count"
                 app:simpleItems="@array/standard_count_of_echo_requests" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -81,6 +83,8 @@
             android:layout_margin="8dp"
             android:hint="@string/interval"
             android:imeOptions="actionNext"
+            app:errorContentDescription="@string/error_less_than_zero"
+            app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/countRequestsTextInputLayout"
             app:layout_constraintTop_toTopOf="parent">
@@ -91,7 +95,6 @@
                 android:layout_height="wrap_content"
                 android:imeOptions="actionDone"
                 android:inputType="number"
-                android:text="@string/default_interval"
                 app:simpleItems="@array/standard_interval_of_echo_requests" />
         </com.google.android.material.textfield.TextInputLayout>
 
