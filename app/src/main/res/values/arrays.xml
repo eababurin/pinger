@@ -9,6 +9,7 @@
         <item>1</item>
         <item>4</item>
         <item>10</item>
+        <item>∞</item>
     </string-array>
 
     <string-array name="standard_interval_of_echo_requests">

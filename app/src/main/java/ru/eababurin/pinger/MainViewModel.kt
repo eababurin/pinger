@@ -16,7 +16,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun ping(hostname: String, counts: String, interval: String) {
         Thread {
-            val inputCommand = mutableListOf("ping", "-c", counts, "-i", interval, hostname)
+            val inputCommand = mutableListOf<String>()
+
+            if (counts == "∞") inputCommand.addAll(listOf("ping", "-i", interval, hostname))
+            else inputCommand.addAll(listOf("ping", "-c", counts, "-i", interval, hostname))
+
             val process = ProcessBuilder().command(inputCommand).start()
             val stdOutput = process.inputStream.bufferedReader()
             val stdErrOutput = process.errorStream.bufferedReader()
