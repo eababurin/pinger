@@ -21,4 +21,5 @@
     <string name="check_fields_are_filled_in">Проверьте заполняемость полей</string>
     <string name="request_aborted">\nrequest aborted</string>
     <string name="aborted">Прервать</string>
+    <string name="infinity">∞</string>
 </resources>

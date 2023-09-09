@@ -103,6 +103,9 @@ class MainFragment : Fragment() {
         ui.countRequestsAutoCompleteTextView.onFocusChangeListener =
             View.OnFocusChangeListener { _, hasFocus ->
                 if (hasFocus) {
+                    if(ui.countRequestsAutoCompleteTextView.text.contains(requireActivity().resources.getString(R.string.infinity)))
+                        ui.countRequestsAutoCompleteTextView.text.clear()
+
                     if (ui.countRequestsAutoCompleteTextView.text.isNullOrBlank()) ui.countRequestsAutoCompleteTextView.error =
                         requireActivity().resources.getString(R.string.error_less_than_zero)
                     else ui.countRequestsAutoCompleteTextView.error = null
