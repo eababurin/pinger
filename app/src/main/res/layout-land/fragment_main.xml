@@ -130,10 +130,23 @@
             android:layout_margin="8dp"
             android:text="@string/send_request"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/clearButton"
+            app:layout_constraintEnd_toStartOf="@id/pingAborted"
             app:layout_constraintHorizontal_weight="2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/outputTextInputLayout" />
+
+        <Button
+            android:id="@+id/pingAborted"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="@string/aborted"
+            app:layout_constraintBottom_toBottomOf="@id/pingButton"
+            app:layout_constraintEnd_toStartOf="@id/clearButton"
+            app:layout_constraintHorizontal_weight="2"
+            app:layout_constraintStart_toEndOf="@id/pingButton"
+            app:layout_constraintTop_toTopOf="@id/pingButton" />
 
         <Button
             android:id="@+id/clearButton"
@@ -142,11 +155,12 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:text="@string/clear_button"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:icon="@drawable/baseline_clear_all_24"
+            app:layout_constraintBottom_toBottomOf="@id/pingButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_weight="1"
-            app:layout_constraintStart_toEndOf="@id/pingButton"
-            app:layout_constraintTop_toBottomOf="@id/outputTextInputLayout" />
+            app:layout_constraintStart_toEndOf="@id/pingAborted"
+            app:layout_constraintTop_toTopOf="@id/pingButton" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
