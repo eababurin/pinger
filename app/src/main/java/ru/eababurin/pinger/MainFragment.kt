@@ -109,6 +109,19 @@ class MainFragment : Fragment() {
                 }
             }
 
+        ui.countRequestsAutoCompleteTextView.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun afterTextChanged(p0: Editable?) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if ((s.isNullOrBlank()) || (s.toString() == "0")) {
+                    ui.countRequestsAutoCompleteTextView.error =
+                        requireActivity().resources.getString(R.string.error_less_than_zero)
+                } else {
+                    ui.countRequestsAutoCompleteTextView.error = null
+                }
+            }
+        })
+
         ui.intervalRequestsAutoCompleteTextView.onFocusChangeListener =
             View.OnFocusChangeListener { _, hasFocus ->
                 if (hasFocus) {
@@ -117,6 +130,19 @@ class MainFragment : Fragment() {
                     else ui.intervalRequestsAutoCompleteTextView.error = null
                 }
             }
+
+        ui.intervalRequestsAutoCompleteTextView.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun afterTextChanged(p0: Editable?) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if ((s.isNullOrBlank()) || (s.toString() == "0")) {
+                    ui.intervalRequestsAutoCompleteTextView.error =
+                        requireActivity().resources.getString(R.string.error_less_than_zero)
+                } else {
+                    ui.intervalRequestsAutoCompleteTextView.error = null
+                }
+            }
+        })
 
         ui.outputTextInputEditText.keyListener = null
         ui.outputTextInputEditText.addTextChangedListener(object : TextWatcher {
