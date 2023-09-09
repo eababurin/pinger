@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     val listOfOutput = mutableListOf<String>()
-    private val aborted = application.getString(R.string.request_aborted)
     val mutableOutput = MutableLiveData<List<String>>()
     val pingError = MutableLiveData<Int>()
     val isExecute = MutableLiveData(false)
@@ -33,12 +32,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
             try {
                 while (true) {
-                    if (!isExecute.value!!) {
-                        listOfOutput.add(aborted)
-                        mutableOutput.postValue(listOfOutput)
-                        isEmptyOutput.postValue(false)
-                        break
-                    }
+                    if (!isExecute.value!!) break
 
                     val stdLine = stdOutput.readLine()
 
@@ -46,6 +40,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                         listOfOutput.add(stdLine)
                         mutableOutput.postValue(listOfOutput)
                         isEmptyOutput.postValue(false)
+                        if (stdLine.contains("rtt")) {
+                            isExecute.postValue(false)
+                        }
                     } else {
                         val errLine = stdErrOutput.readLine()
                         if (errLine != null) {

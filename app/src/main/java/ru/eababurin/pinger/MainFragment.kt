@@ -196,7 +196,7 @@ class MainFragment : Fragment() {
         }
 
         ui.pingAborted.setOnClickListener {
-            mainViewModel.isExecute.value = false
+            mainViewModel.isExecute.postValue(false)
         }
     }
 
