@@ -114,6 +114,7 @@
                 android:id="@+id/outputTextInputEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:enabled="false"
                 android:gravity="top"
                 android:inputType="textMultiLine"
                 android:longClickable="true"
