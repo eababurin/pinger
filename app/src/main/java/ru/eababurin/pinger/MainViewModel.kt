@@ -7,8 +7,11 @@ import androidx.lifecycle.MutableLiveData
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     val listOfOutput = mutableListOf<String>()
+    private val aborted = application.getString(R.string.request_aborted)
     val mutableOutput = MutableLiveData<List<String>>()
     val pingError = MutableLiveData<Int>()
+    val isExecute = MutableLiveData(false)
+    val isEmptyOutput = MutableLiveData(true)
 
     val requestHostname = MutableLiveData<String>()
     val requestCount = MutableLiveData<String>()
@@ -16,8 +19,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun ping(hostname: String, counts: String, interval: String) {
         Thread {
-
-            if (!listOfOutput.isEmpty())
+            if (listOfOutput.isNotEmpty())
                 listOfOutput.addAll(listOf("\n", "# # # # # # # # # #", "\n"))
 
             val inputCommand = mutableListOf<String>()
@@ -31,16 +33,26 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
             try {
                 while (true) {
+                    if (!isExecute.value!!) {
+                        listOfOutput.add(aborted)
+                        mutableOutput.postValue(listOfOutput)
+                        isEmptyOutput.postValue(false)
+                        break
+                    }
+
                     val stdLine = stdOutput.readLine()
+
                     if (stdLine != null) {
                         listOfOutput.add(stdLine)
                         mutableOutput.postValue(listOfOutput)
-
+                        isEmptyOutput.postValue(false)
                     } else {
                         val errLine = stdErrOutput.readLine()
                         if (errLine != null) {
                             listOfOutput.add(errLine)
                             mutableOutput.postValue(listOfOutput)
+                            isEmptyOutput.postValue(false)
+                            isExecute.postValue(false)
                             break
                         }
                     }
@@ -50,6 +62,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             } finally {
                 process.destroy()
             }
+            isExecute.postValue(false)
         }.start()
     }
 }

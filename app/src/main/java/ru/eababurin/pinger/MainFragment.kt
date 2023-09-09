@@ -77,6 +77,12 @@ class MainFragment : Fragment() {
             requestInterval.observe(viewLifecycleOwner) {
                 ui.intervalRequestsAutoCompleteTextView.setText(it)
             }
+            isExecute.observe(viewLifecycleOwner) {
+                ui.pingAborted.isEnabled = it
+            }
+            isEmptyOutput.observe(viewLifecycleOwner) {
+                ui.clearButton.isEnabled = !it
+            }
         }
 
         ui.hostnameTextInputEditText.onFocusChangeListener =
@@ -140,12 +146,14 @@ class MainFragment : Fragment() {
         }
 
         ui.pingButton.setOnClickListener {
-            if ((ui.hostnameTextInputEditText.error == null) && (ui.countRequestsAutoCompleteTextView.error == null) && (ui.intervalRequestsAutoCompleteTextView.error == null))
+            if ((ui.hostnameTextInputEditText.error == null) && (ui.countRequestsAutoCompleteTextView.error == null) && (ui.intervalRequestsAutoCompleteTextView.error == null)) {
+                mainViewModel.isExecute.value = true
                 mainViewModel.ping(
                     ui.hostnameTextInputEditText.text.toString(),
                     ui.countRequestsAutoCompleteTextView.text.toString(),
                     ui.intervalRequestsAutoCompleteTextView.text.toString()
                 )
+            }
             else
                 Snackbar.make(
                     ui.layout,
@@ -155,21 +163,14 @@ class MainFragment : Fragment() {
         }
 
         ui.clearButton.setOnClickListener {
-            ui.hostnameTextInputEditText.text!!.clear()
-            ui.hostnameTextInputEditText.error = null
-
-            ui.countRequestsAutoCompleteTextView.error =null
-            ui.countRequestsAutoCompleteTextView.text!!.clear()
-
-            ui.intervalRequestsAutoCompleteTextView.error = null
-            ui.intervalRequestsAutoCompleteTextView.text!!.clear()
-
             ui.outputTextInputEditText.text!!.clear()
-            ui.outputTextInputEditText.error = null
 
             mainViewModel.listOfOutput.clear()
+            mainViewModel.isEmptyOutput.value = true
+        }
 
-            //(requireActivity() as MainActivity).changeTheme()
+        ui.pingAborted.setOnClickListener {
+            mainViewModel.isExecute.value = false
         }
     }
 
