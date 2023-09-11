@@ -30,7 +30,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/hostnameLayout"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -44,13 +44,23 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_goneMarginEnd="16dp">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <AutoCompleteTextView
+                android:id="@+id/hostnameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionNext"
+                android:hint="@string/hostname"
+                android:inputType="textUri"
+                app:simpleItems="@array/standard_interval_of_echo_requests"
+                android:nextFocusForward="@id/countEditText" />
+
+            <!--<com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/hostnameEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:imeOptions="actionNext"
                 android:inputType="textUri"
-                android:nextFocusForward="@id/countEditText" />
+                android:nextFocusForward="@id/countEditText" />-->
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
