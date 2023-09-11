@@ -15,11 +15,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val requestHostname = MutableLiveData<String>()
     val requestCount = MutableLiveData<String>()
     val requestInterval = MutableLiveData<String>()
+    val outputSeparator = application.getString(R.string.output_separator)
 
     fun ping(hostname: String, counts: String, interval: String) {
         Thread {
             if (listOfOutput.isNotEmpty())
-                listOfOutput.addAll(listOf("\n", "# # # # # # # # # #", "\n"))
+                listOfOutput.add((outputSeparator))
 
             val inputCommand = mutableListOf<String>()
 
