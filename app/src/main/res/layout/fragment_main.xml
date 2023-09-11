@@ -41,8 +41,7 @@
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_goneMarginEnd="16dp">
+            app:layout_constraintTop_toTopOf="parent">
 
             <AutoCompleteTextView
                 android:id="@+id/hostnameEditText"
@@ -51,16 +50,7 @@
                 android:imeOptions="actionNext"
                 android:hint="@string/hostname"
                 android:inputType="textUri"
-                app:simpleItems="@array/standard_interval_of_echo_requests"
                 android:nextFocusForward="@id/countEditText" />
-
-            <!--<com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/hostnameEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:imeOptions="actionNext"
-                android:inputType="textUri"
-                android:nextFocusForward="@id/countEditText" />-->
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
