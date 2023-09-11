@@ -3,19 +3,19 @@ package ru.eababurin.pinger
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import ru.eababurin.pinger.databinding.FragmentMainBinding
 
 
@@ -26,6 +26,11 @@ class MainFragment : Fragment() {
 
     private lateinit var mainViewModel: MainViewModel
 
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var sharedPreferencesEditor: SharedPreferences.Editor
+
+    private var favouritesList = mutableSetOf<String>()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -34,6 +39,9 @@ class MainFragment : Fragment() {
         (activity as AppCompatActivity).setSupportActionBar(ui.topAppBar)
         mainViewModel =
             ViewModelProvider(requireActivity())[MainViewModel::class.java]/*setHasOptionsMenu(true)*/
+
+        sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
+        sharedPreferencesEditor = sharedPreferences.edit()
 
         return ui.root
     }
@@ -67,19 +75,45 @@ class MainFragment : Fragment() {
         }
 
         ui.hostnameEditText.apply {
+
+            favouritesList = sharedPreferences.getStringSet(
+                FAVOURITES,
+                mutableSetOf(resources.getString(R.string.google_public_dns))
+            )!!.toMutableSet()
+            if (favouritesList.isNotEmpty())
+                setAdapter(
+                    ArrayAdapter(
+                        requireActivity(),
+                        android.R.layout.simple_list_item_1,
+                        favouritesList.toList()
+                    )
+                )
+
             onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
                 if (hasFocus) {
                     if (ui.hostnameEditText.text.isNullOrBlank()) {
                         ui.hostnameEditText.error =
                             requireActivity().resources.getString(R.string.error_field_cannot_be_empty)
-                        ui.hostnameLayout.endIconMode = TextInputLayout.END_ICON_NONE
-                        Log.d("TEST", "Меняем в onFocusChangeListener -> hasFocus")
                     } else {
                         ui.hostnameEditText.error = null
-                        ui.hostnameLayout.endIconMode = TextInputLayout.END_ICON_CLEAR_TEXT
                     }
                 }
             }
+
+            addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+                override fun afterTextChanged(p0: Editable?) {}
+                override fun onTextChanged(
+                    s: CharSequence?, start: Int, before: Int, count: Int
+                ) {
+                    if ((s.isNullOrBlank()) || (s.toString() == "0")) {
+                        ui.hostnameEditText.error =
+                            requireActivity().resources.getString(R.string.error_field_cannot_be_empty)
+                    } else {
+                        ui.hostnameEditText.error = null
+                    }
+                }
+            })
         }
 
         ui.countEditText.apply {
@@ -162,7 +196,7 @@ class MainFragment : Fragment() {
                     Snackbar.make(
                         ui.layout,
                         requireActivity().resources.getString(R.string.output_was_copied),
-                        Snackbar.ANIMATION_MODE_FADE
+                        Snackbar.LENGTH_SHORT
                     ).show()
 
                     true
@@ -172,18 +206,33 @@ class MainFragment : Fragment() {
 
         ui.executeButton.apply {
             setOnClickListener {
-                if ((ui.hostnameEditText.error == null) && (ui.countEditText.error == null) && (ui.intervalEditText.error == null)) {
+                if ((!ui.hostnameEditText.text.isNullOrBlank()) && (!ui.countEditText.text.isNullOrBlank()) && (!ui.intervalEditText.text.isNullOrBlank())) {
                     mainViewModel.isExecute.value = true
                     mainViewModel.ping(
                         ui.hostnameEditText.text.toString(),
                         ui.countEditText.text.toString(),
                         ui.intervalEditText.text.toString()
                     )
-                } else Snackbar.make(
-                    ui.layout,
-                    resources.getString(R.string.check_fields_are_filled_in),
-                    Snackbar.ANIMATION_MODE_FADE
-                ).show()
+
+                    if (!ui.hostnameEditText.text.isNullOrBlank()) {
+                        sharedPreferencesEditor.remove(FAVOURITES)
+                        favouritesList.add(ui.hostnameEditText.text.toString())
+                        sharedPreferencesEditor.putStringSet(FAVOURITES, favouritesList.toSet())
+                        sharedPreferencesEditor.apply()
+                        ui.hostnameEditText.setAdapter(
+                            ArrayAdapter(
+                                requireActivity(),
+                                android.R.layout.simple_list_item_1,
+                                favouritesList.toList()
+                            )
+                        )
+                    }
+                } else
+                    Snackbar.make(
+                        ui.layout,
+                        resources.getString(R.string.check_fields_are_filled_in),
+                        Snackbar.LENGTH_SHORT
+                    ).show()
             }
         }
 
