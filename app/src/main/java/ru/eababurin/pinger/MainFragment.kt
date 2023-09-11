@@ -68,6 +68,7 @@ class MainFragment : Fragment() {
             }
             isExecute.observe(viewLifecycleOwner) {
                 ui.abortedButton.isEnabled = it
+                ui.executeButton.isEnabled = !it
             }
             isEmptyOutput.observe(viewLifecycleOwner) {
                 ui.clearButton.isEnabled = !it
