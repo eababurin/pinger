@@ -30,7 +30,7 @@
         android:layout_margin="8dp">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/hostnameTextInputLayout"
+            android:id="@+id/hostnameLayout"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -38,22 +38,22 @@
             android:hint="@string/hostname"
             app:errorContentDescription="@string/error_field_cannot_be_empty"
             app:errorEnabled="true"
-            app:layout_constraintEnd_toStartOf="@id/countRequestsTextInputLayout"
+            app:layout_constraintEnd_toStartOf="@id/countLayout"
             app:layout_constraintHorizontal_weight="2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/hostnameTextInputEditText"
+                android:id="@+id/hostnameEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:imeOptions="actionNext"
                 android:inputType="textUri"
-                android:nextFocusForward="@id/countRequestsAutoCompleteTextView" />
+                android:nextFocusForward="@id/countEditText" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/countRequestsTextInputLayout"
+            android:id="@+id/countLayout"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -62,24 +62,24 @@
             android:hint="@string/count_requests"
             app:errorContentDescription="@string/error_field_cannot_be_empty"
             app:errorEnabled="true"
-            app:layout_constraintEnd_toStartOf="@id/intervalRequestsTextInputLayout"
+            app:layout_constraintEnd_toStartOf="@id/intervalLayout"
             app:layout_constraintHorizontal_weight="1"
-            app:layout_constraintStart_toEndOf="@id/hostnameTextInputLayout"
+            app:layout_constraintStart_toEndOf="@id/hostnameLayout"
             app:layout_constraintTop_toTopOf="parent">
 
             <AutoCompleteTextView
-                android:id="@+id/countRequestsAutoCompleteTextView"
+                android:id="@+id/countEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/count_requests"
                 android:imeOptions="actionNext"
                 android:inputType="number"
-                android:nextFocusForward="@id/intervalRequestsAutoCompleteTextView"
+                android:nextFocusForward="@id/intervalEditText"
                 app:simpleItems="@array/standard_count_of_echo_requests" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/intervalRequestsTextInputLayout"
+            android:id="@+id/intervalLayout"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -90,11 +90,11 @@
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_weight="1"
-            app:layout_constraintStart_toEndOf="@id/countRequestsTextInputLayout"
+            app:layout_constraintStart_toEndOf="@id/countLayout"
             app:layout_constraintTop_toTopOf="parent">
 
             <AutoCompleteTextView
-                android:id="@+id/intervalRequestsAutoCompleteTextView"
+                android:id="@+id/intervalEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:imeOptions="actionDone"
@@ -103,34 +103,34 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/outputTextInputLayout"
+            android:id="@+id/outputLayout"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:hint="@string/result"
-            app:layout_constraintBottom_toTopOf="@id/pingButton"
+            app:layout_constraintBottom_toTopOf="@id/executeButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/countRequestsTextInputLayout">
+            app:layout_constraintTop_toBottomOf="@id/countLayout">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/outputTextInputEditText"
+                android:id="@+id/outputEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:enabled="false"
                 android:gravity="top"
                 android:inputType="textMultiLine"
                 android:longClickable="true"
-                android:nextFocusForward="@id/pingButton"
+                android:nextFocusForward="@id/executeButton"
                 android:scrollbars="vertical|horizontal"
                 android:scrollHorizontally="false"
                 android:textIsSelectable="true" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/pingButton"
+            android:id="@+id/executeButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -138,23 +138,23 @@
             android:layout_marginBottom="8dp"
             android:text="@string/send_request"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/pingAborted"
+            app:layout_constraintEnd_toStartOf="@id/abortedButton"
             app:layout_constraintHorizontal_weight="2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/outputTextInputLayout" />
+            app:layout_constraintTop_toBottomOf="@id/outputLayout" />
 
         <Button
-            android:id="@+id/pingAborted"
+            android:id="@+id/abortedButton"
             style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:text="@string/aborted"
-            app:layout_constraintBottom_toBottomOf="@id/pingButton"
+            app:layout_constraintBottom_toBottomOf="@id/executeButton"
             app:layout_constraintEnd_toStartOf="@id/clearButton"
             app:layout_constraintHorizontal_weight="2"
-            app:layout_constraintStart_toEndOf="@id/pingButton"
-            app:layout_constraintTop_toTopOf="@id/pingButton" />
+            app:layout_constraintStart_toEndOf="@id/executeButton"
+            app:layout_constraintTop_toTopOf="@id/executeButton" />
 
         <Button
             android:id="@+id/clearButton"
@@ -166,11 +166,11 @@
             android:layout_marginBottom="8dp"
             android:text="@string/clear_button"
             app:icon="@drawable/baseline_clear_all_24"
-            app:layout_constraintBottom_toBottomOf="@id/pingButton"
+            app:layout_constraintBottom_toBottomOf="@id/executeButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_weight="1"
-            app:layout_constraintStart_toEndOf="@id/pingAborted"
-            app:layout_constraintTop_toTopOf="@id/pingButton" />
+            app:layout_constraintStart_toEndOf="@id/abortedButton"
+            app:layout_constraintTop_toTopOf="@id/executeButton" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

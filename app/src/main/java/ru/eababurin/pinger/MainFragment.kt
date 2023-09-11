@@ -44,57 +44,57 @@ class MainFragment : Fragment() {
         mainViewModel.run {
             mutableOutput.observe(viewLifecycleOwner) {
                 val list = it.joinToString("\n")
-                ui.outputTextInputEditText.text = Editable.Factory.getInstance().newEditable(list)
+                ui.outputEditText.text = Editable.Factory.getInstance().newEditable(list)
             }
             pingError.observe(viewLifecycleOwner) {
                 Snackbar.make(ui.layout, it, Snackbar.LENGTH_SHORT).show()
             }
             requestHostname.observe(viewLifecycleOwner) {
-                ui.hostnameTextInputEditText.setText(it)
+                ui.hostnameEditText.setText(it)
             }
             requestCount.observe(viewLifecycleOwner) {
-                ui.countRequestsAutoCompleteTextView.setText(it)
+                ui.countEditText.setText(it)
             }
             requestInterval.observe(viewLifecycleOwner) {
-                ui.intervalRequestsAutoCompleteTextView.setText(it)
+                ui.intervalEditText.setText(it)
             }
             isExecute.observe(viewLifecycleOwner) {
-                ui.pingAborted.isEnabled = it
+                ui.abortedButton.isEnabled = it
             }
             isEmptyOutput.observe(viewLifecycleOwner) {
                 ui.clearButton.isEnabled = !it
             }
         }
 
-        ui.hostnameTextInputEditText.apply {
+        ui.hostnameEditText.apply {
             onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
                 if (hasFocus) {
-                    if (ui.hostnameTextInputEditText.text.isNullOrBlank()) {
-                        ui.hostnameTextInputEditText.error =
+                    if (ui.hostnameEditText.text.isNullOrBlank()) {
+                        ui.hostnameEditText.error =
                             requireActivity().resources.getString(R.string.error_field_cannot_be_empty)
-                        ui.hostnameTextInputLayout.endIconMode = TextInputLayout.END_ICON_NONE
+                        ui.hostnameLayout.endIconMode = TextInputLayout.END_ICON_NONE
                         Log.d("TEST", "Меняем в onFocusChangeListener -> hasFocus")
                     } else {
-                        ui.hostnameTextInputEditText.error = null
-                        ui.hostnameTextInputLayout.endIconMode = TextInputLayout.END_ICON_CLEAR_TEXT
+                        ui.hostnameEditText.error = null
+                        ui.hostnameLayout.endIconMode = TextInputLayout.END_ICON_CLEAR_TEXT
                     }
                 }
             }
         }
 
-        ui.countRequestsAutoCompleteTextView.apply {
+        ui.countEditText.apply {
             onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
                 if (hasFocus) {
-                    if (ui.countRequestsAutoCompleteTextView.text.contains(
+                    if (ui.countEditText.text.contains(
                             requireActivity().resources.getString(
                                 R.string.infinity
                             )
                         )
-                    ) ui.countRequestsAutoCompleteTextView.text.clear()
+                    ) ui.countEditText.text.clear()
 
-                    if (ui.countRequestsAutoCompleteTextView.text.isNullOrBlank()) ui.countRequestsAutoCompleteTextView.error =
+                    if (ui.countEditText.text.isNullOrBlank()) ui.countEditText.error =
                         requireActivity().resources.getString(R.string.error_less_than_zero)
-                    else ui.countRequestsAutoCompleteTextView.error = null
+                    else ui.countEditText.error = null
                 }
 
                 addTextChangedListener(object : TextWatcher {
@@ -104,23 +104,23 @@ class MainFragment : Fragment() {
                         s: CharSequence?, start: Int, before: Int, count: Int
                     ) {
                         if ((s.isNullOrBlank()) || (s.toString() == "0")) {
-                            ui.countRequestsAutoCompleteTextView.error =
+                            ui.countEditText.error =
                                 requireActivity().resources.getString(R.string.error_less_than_zero)
                         } else {
-                            ui.countRequestsAutoCompleteTextView.error = null
+                            ui.countEditText.error = null
                         }
                     }
                 })
             }
         }
 
-        ui.intervalRequestsAutoCompleteTextView.apply {
+        ui.intervalEditText.apply {
             onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
                 if (hasFocus) {
-                    if (ui.intervalRequestsAutoCompleteTextView.text.isNullOrBlank())
-                        ui.intervalRequestsAutoCompleteTextView.error =
+                    if (ui.intervalEditText.text.isNullOrBlank())
+                        ui.intervalEditText.error =
                             requireActivity().resources.getString(R.string.error_less_than_zero)
-                    else ui.intervalRequestsAutoCompleteTextView.error = null
+                    else ui.intervalEditText.error = null
                 }
             }
 
@@ -129,29 +129,29 @@ class MainFragment : Fragment() {
                 override fun afterTextChanged(p0: Editable?) {}
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                     if ((s.isNullOrBlank()) || (s.toString() == "0")) {
-                        ui.intervalRequestsAutoCompleteTextView.error =
+                        ui.intervalEditText.error =
                             requireActivity().resources.getString(R.string.error_less_than_zero)
                     } else {
-                        ui.intervalRequestsAutoCompleteTextView.error = null
+                        ui.intervalEditText.error = null
                     }
                 }
             })
         }
 
-        ui.outputTextInputEditText.apply {
+        ui.outputEditText.apply {
             keyListener = null
             addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
                 override fun afterTextChanged(p0: Editable?) {}
                 override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                    ui.outputTextInputEditText.isEnabled =
-                        !ui.outputTextInputEditText.text.isNullOrEmpty()
-                    ui.outputTextInputEditText.setSelection(p0!!.length)
+                    ui.outputEditText.isEnabled =
+                        !ui.outputEditText.text.isNullOrEmpty()
+                    ui.outputEditText.setSelection(p0!!.length)
 
                 }
             })
             setOnLongClickListener {
-                if (ui.outputTextInputEditText.text!!.isEmpty()) false
+                if (ui.outputEditText.text!!.isEmpty()) false
                 else {
                     val clipboardManager =
                         requireActivity().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
@@ -170,14 +170,14 @@ class MainFragment : Fragment() {
             }
         }
 
-        ui.pingButton.apply {
+        ui.executeButton.apply {
             setOnClickListener {
-                if ((ui.hostnameTextInputEditText.error == null) && (ui.countRequestsAutoCompleteTextView.error == null) && (ui.intervalRequestsAutoCompleteTextView.error == null)) {
+                if ((ui.hostnameEditText.error == null) && (ui.countEditText.error == null) && (ui.intervalEditText.error == null)) {
                     mainViewModel.isExecute.value = true
                     mainViewModel.ping(
-                        ui.hostnameTextInputEditText.text.toString(),
-                        ui.countRequestsAutoCompleteTextView.text.toString(),
-                        ui.intervalRequestsAutoCompleteTextView.text.toString()
+                        ui.hostnameEditText.text.toString(),
+                        ui.countEditText.text.toString(),
+                        ui.intervalEditText.text.toString()
                     )
                 } else Snackbar.make(
                     ui.layout,
@@ -189,14 +189,14 @@ class MainFragment : Fragment() {
 
         ui.clearButton.apply {
             setOnClickListener {
-                ui.outputTextInputEditText.text!!.clear()
+                ui.outputEditText.text!!.clear()
 
                 mainViewModel.listOfOutput.clear()
                 mainViewModel.isEmptyOutput.value = true
             }
         }
 
-        ui.pingAborted.apply {
+        ui.abortedButton.apply {
             setOnClickListener {
                 mainViewModel.isExecute.postValue(false)
             }
@@ -207,9 +207,9 @@ class MainFragment : Fragment() {
         super.onPause()
 
         mainViewModel.run {
-            requestHostname.value = ui.hostnameTextInputEditText.text.toString()
-            requestCount.value = ui.countRequestsAutoCompleteTextView.text.toString()
-            requestInterval.value = ui.intervalRequestsAutoCompleteTextView.text.toString()
+            requestHostname.value = ui.hostnameEditText.text.toString()
+            requestCount.value = ui.countEditText.text.toString()
+            requestInterval.value = ui.intervalEditText.text.toString()
         }
     }
 
