@@ -4,6 +4,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -72,6 +73,12 @@ class MainFragment : Fragment() {
             }
             isEmptyOutput.observe(viewLifecycleOwner) {
                 ui.clearButton.isEnabled = !it
+
+                if (mainViewModel.isEmptyOutput.value == true) {
+                    ui.outputEditText.typeface = Typeface.DEFAULT
+                } else {
+                    ui.outputEditText.typeface = Typeface.MONOSPACE
+                }
             }
         }
 
