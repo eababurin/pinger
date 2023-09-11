@@ -9,6 +9,9 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
@@ -38,8 +41,8 @@ class MainFragment : Fragment() {
         _ui = FragmentMainBinding.inflate(inflater, container, false)
 
         (activity as AppCompatActivity).setSupportActionBar(ui.topAppBar)
-        mainViewModel =
-            ViewModelProvider(requireActivity())[MainViewModel::class.java]/*setHasOptionsMenu(true)*/
+        mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
+        setHasOptionsMenu(true)
 
         sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
         sharedPreferencesEditor = sharedPreferences.edit()
@@ -275,16 +278,19 @@ class MainFragment : Fragment() {
         _ui = null
         super.onDestroy()
     }
-}
 
-/*override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-    inflater.inflate(R.menu.options_menu, menu)
-    super.onCreateOptionsMenu(menu, inflater)
-}
-
-override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    when (item.itemId) {
-        R.id.options_menu_change_theme -> changeTheme()
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.appbarmenu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
     }
-    return super.onOptionsItemSelected(item)
-}*/
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menuSettings -> {
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentLayout, SettingsFragment()).addToBackStack(null).commit()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+}

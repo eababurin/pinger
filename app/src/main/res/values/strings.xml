@@ -24,4 +24,5 @@
     <string name="infinity">∞</string>
     <string name="output_separator">\n# # # # # # # # # #\n</string>
     <string name="google_public_dns">8.8.8.8</string>
+    <string name="settings">Настройки</string>
 </resources>
