@@ -1,6 +1,7 @@
 package ru.eababurin.pinger
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 
@@ -19,6 +20,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun ping(hostname: String, counts: String, interval: String) {
         Thread {
+            val i = (0..100).random()
+            Log.d("TEST", "Начало; id=$i")
             if (listOfOutput.isNotEmpty())
                 listOfOutput.add((outputSeparator))
 
@@ -50,8 +53,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                             listOfOutput.add(errLine)
                             mutableOutput.postValue(listOfOutput)
                             isEmptyOutput.postValue(false)
-                            isExecute.postValue(false)
-                            break
+                            if (counts == "∞") {
+                                Thread.sleep(interval.toLong() * 1000)
+                                ping(hostname, counts, interval)
+                            } else {
+                                isExecute.postValue(false)
+                                break
+                            }
                         }
                     }
                 }
@@ -61,6 +69,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 process.destroy()
             }
             isExecute.postValue(false)
+            Log.d("TEST", "Конец; id=$i")
         }.start()
     }
 }
