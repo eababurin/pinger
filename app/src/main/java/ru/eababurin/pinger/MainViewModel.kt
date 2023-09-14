@@ -1,7 +1,6 @@
 package ru.eababurin.pinger
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 
@@ -20,10 +19,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun ping(hostname: String, counts: String, interval: String) {
         Thread {
-            val i = (0..100).random()
-            Log.d("TEST", "Начало; id=$i")
-            if (listOfOutput.isNotEmpty())
-                listOfOutput.add((outputSeparator))
+            if (listOfOutput.isNotEmpty()) listOfOutput.add((outputSeparator))
 
             val inputCommand = mutableListOf<String>()
 
@@ -69,7 +65,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 process.destroy()
             }
             isExecute.postValue(false)
-            Log.d("TEST", "Конец; id=$i")
         }.start()
     }
 }
