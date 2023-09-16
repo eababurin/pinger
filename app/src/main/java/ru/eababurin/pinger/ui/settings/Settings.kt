@@ -8,6 +8,7 @@ import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
+import androidx.preference.SwitchPreferenceCompat
 import ru.eababurin.pinger.R
 import ru.eababurin.pinger.ui.settings.favourites.FavouritesFragment
 import ru.eababurin.pinger.utils.KEY_THEME
@@ -31,7 +32,7 @@ class Settings : PreferenceFragmentCompat() {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
         preferencesEditor = sharedPreferences.edit()
 
-        autoAddHost = findPreference<CheckBoxPreference>("settings_auto_add_host")!!.apply {
+        autoAddHost = findPreference<SwitchPreferenceCompat>("settings_auto_add_host")!!.apply {
 
         }
 

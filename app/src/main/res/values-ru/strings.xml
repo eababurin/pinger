@@ -46,4 +46,6 @@
     <string name="settings_count_requests">Количество запросов по умолчанию</string>
     <string name="settings_count_requests_summary">При установке 0 запрос будет отправляться до принудительной остановки</string>
     <string name="settings_interval">Интервал запросов по умолчанию</string>
+    <string name="settings_other">Другие настройки</string>
+    <string name="settings_send_feedback">Отправить отзыв</string>
 </resources>

@@ -46,4 +46,6 @@
     <string name="settings_count_requests">Default number of requests</string>
     <string name="settings_count_requests_summary">If set to 0, the request will be sent until forced stop</string>
     <string name="settings_interval">Default request interval</string>
+    <string name="settings_other">Other settings</string>
+    <string name="settings_send_feedback">Send feedback</string>
 </resources>

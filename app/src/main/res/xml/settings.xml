@@ -14,7 +14,7 @@
             android:title="@string/settings_app_theme"
             app:defaultValue="system" />
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:key="settings_auto_add_host"
             android:summary="@string/settings_auto_add_host_summary"
             android:title="@string/settings_auto_add_host"
@@ -54,6 +54,24 @@
             android:selectAllOnFocus="true"
             android:title="@string/settings_interval"
             app:defaultValue="0" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="settings_other"
+        android:title="@string/settings_other">
+
+        <Preference
+            android:key="settings_contact"
+            android:title="@string/settings_send_feedback">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="mailto:c.@eababurin.ru">
+                <extra
+                    android:name="android.intent.extra.SUBJECT"
+                    android:value="Pinger : " />
+            </intent>
+        </Preference>
 
     </PreferenceCategory>
 
