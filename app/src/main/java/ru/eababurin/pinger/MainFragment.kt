@@ -45,7 +45,6 @@ class MainFragment : Fragment() {
         mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
         setHasOptionsMenu(true)
 
-//        sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
         sharedPreferencesEditor = sharedPreferences.edit()
 
@@ -312,6 +311,10 @@ class MainFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.appbarmenu, menu)
+
+        menu.findItem(R.id.menuSettings).isVisible = true
+        menu.findItem(R.id.deleteItems).isVisible = false
+
         super.onCreateOptionsMenu(menu, inflater)
     }
 
