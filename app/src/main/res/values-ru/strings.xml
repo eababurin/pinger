@@ -1,0 +1,49 @@
+<resources>
+    <string name="app_name">Pinger</string>
+    <string name="favourites">Избранное</string>
+    <string name="settings">Настройки</string>
+
+    <string name="button_aborted">Прервать</string>
+    <string name="button_add">Добавить</string>
+    <string name="button_clear">Очистить</string>
+    <string name="button_remove">Удалить</string>
+    <string name="button_send_request">Отправить</string>
+
+    <string name="edittext_count_requests">Количество запросов</string>
+    <string name="edittext_input_new_address">Введите новый адрес</string>
+    <string name="edittext_hostname">Адрес хоста</string>
+    <string name="edittext_interval">Интервал запросов</string>
+    <string name="edittext_output">Результат</string>
+
+    <string name="error_check_address_field">Адрес должен быть заполнен</string>
+    <string name="error_input_address">Введите адрес</string>
+    <string name="error_field_cannot_be_empty">Поле не может быть пустым</string>
+    <string name="error_unknown">Произошла неизвестная ошибка</string>
+    <string name="error_less_than_zero">Должно быть больше 0</string>
+
+    <string name="notify_output_was_copied">Вывод скопирован в буфер обмена</string>
+    <string name="notify_selected_items">Выберите адреса, которые нужно удалить</string>
+
+    <string name="infinity">∞</string>
+    <string name="output_separator">\n</string>
+
+    <string name="theme_system">Системная</string>
+    <string name="theme_light">Светлая</string>
+    <string name="theme_dark">Тёмная</string>
+
+    <string name="theme_select_system">Выбрана системная тема</string>
+    <string name="theme_select_light">Выбрана светлая тема</string>
+    <string name="theme_select_dark">Выбрана тёмная тема</string>
+
+    <string name="settings_app">Настройки приложения</string>
+    <string name="settings_app_theme">Тема приложения</string>
+    <string name="settings_auto_add_host">Добавлять в избранное</string>
+    <string name="settings_auto_add_host_summary">Автоматически добавлять адрес в избранное при первой отправке запроса</string>
+    <string name="settings_favourites">Избранное</string>
+    <string name="settings_favourites_summary">Редактировать список адресов</string>
+    <string name="settings_requests">Запросы</string>
+    <string name="settings_font_size">Размер шрифта вывода</string>
+    <string name="settings_count_requests">Количество запросов по умолчанию</string>
+    <string name="settings_count_requests_summary">При установке 0 запрос будет отправляться до принудительной остановки</string>
+    <string name="settings_interval">Интервал запросов по умолчанию</string>
+</resources>
