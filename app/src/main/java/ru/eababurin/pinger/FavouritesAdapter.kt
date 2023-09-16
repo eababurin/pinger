@@ -50,4 +50,9 @@ class FavouritesAdapter(private val favouritesList: MutableList<String>) :
         favouritesList.removeAll(checkedItems)
         return favouritesList
     }
+
+    fun addItem(item: String): MutableList<String> {
+        favouritesList.add(item)
+        return favouritesList
+    }
 }

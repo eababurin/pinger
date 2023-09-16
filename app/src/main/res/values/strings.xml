@@ -19,6 +19,7 @@
     <string name="error_less_than_zero">Должно быть больше 0</string>
     <string name="error_field_cannot_be_empty">Поле не может быть пустым</string>
     <string name="check_fields_are_filled_in">Проверьте заполняемость полей</string>
+    <string name="check_address_field">Адрес должен быть заполнен</string>
     <string name="request_aborted">\nrequest aborted</string>
     <string name="aborted">Прервать</string>
     <string name="infinity">∞</string>
@@ -35,4 +36,7 @@
     <string name="theme_select_dark">Выбрана тёмная тема</string>
     <string name="favourites">Избранное</string>
     <string name="remove">Удалить</string>
+    <string name="error_input_address">Введите адрес</string>
+    <string name="input_new_address">Введите новый адрес</string>
+    <string name="add">Добавить</string>
 </resources>

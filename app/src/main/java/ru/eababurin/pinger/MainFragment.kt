@@ -91,17 +91,6 @@ class MainFragment : Fragment() {
             favouritesList = sharedPreferences.getStringSet(KEY_FAVOURITES, mutableSetOf(""))!!.toMutableSet()
             if (!favouritesList.contains(""))
                 setAdapter(ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1, favouritesList.toList()))
-
-            addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-                override fun afterTextChanged(p0: Editable?) {}
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    if ((s.isNullOrBlank()) || (s.toString() == "0"))
-                        ui.hostnameEditText.error = requireActivity().resources.getString(R.string.error_field_cannot_be_empty)
-                    else
-                        ui.hostnameEditText.error = null
-                }
-            })
         }
 
         ui.countEditText.apply {
@@ -113,17 +102,6 @@ class MainFragment : Fragment() {
                 setText(count)
                 mainViewModel.requestCount.value = count
             }
-
-            addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-                override fun afterTextChanged(p0: Editable?) {}
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    if ((s.isNullOrBlank()) || (s.toString() == "0"))
-                        ui.countEditText.error = requireActivity().resources.getString(R.string.error_less_than_zero)
-                    else
-                        ui.countEditText.error = null
-                }
-            })
         }
 
         ui.intervalEditText.apply {
@@ -132,17 +110,6 @@ class MainFragment : Fragment() {
                 setText(interval)
                 mainViewModel.requestInterval.value = interval
             }
-
-            addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-                override fun afterTextChanged(p0: Editable?) {}
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    if ((s.isNullOrBlank()) || (s.toString() == "0"))
-                        ui.intervalEditText.error = requireActivity().resources.getString(R.string.error_less_than_zero)
-                    else
-                        ui.intervalEditText.error = null
-                }
-            })
         }
 
         ui.outputEditText.apply {
@@ -181,7 +148,7 @@ class MainFragment : Fragment() {
 
         ui.executeButton.apply {
             setOnClickListener {
-                if ((!ui.hostnameEditText.text.isNullOrBlank()) && (!ui.countEditText.text.isNullOrBlank()) && (!ui.intervalEditText.text.isNullOrBlank())) {
+                if ((!ui.hostnameEditText.text.isNullOrBlank())) {
                     mainViewModel.isExecute.value = true
                     mainViewModel.ping(
                         ui.hostnameEditText.text.toString(),
@@ -208,12 +175,16 @@ class MainFragment : Fragment() {
                             )
                         )
                     }
-                } else
+                } else {
+
+
+
                     Snackbar.make(
                         ui.layout,
-                        resources.getString(R.string.check_fields_are_filled_in),
+                        resources.getString(R.string.check_address_field),
                         Snackbar.LENGTH_SHORT
                     ).show()
+                }
             }
         }
 

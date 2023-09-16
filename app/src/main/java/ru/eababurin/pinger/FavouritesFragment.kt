@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
+import com.google.android.material.snackbar.Snackbar
 import ru.eababurin.pinger.databinding.FragmentFavouritesBinding
 
 class FavouritesFragment : Fragment() {
@@ -54,6 +55,17 @@ class FavouritesFragment : Fragment() {
 
         ui.topAppBar.setNavigationOnClickListener { requireActivity().onBackPressed() }
         ui.recyclerView.adapter = adapter
+
+        ui.addHostButton.setOnClickListener {
+            if (ui.newHostEditText.text.isNullOrEmpty())
+                Snackbar.make(ui.layout, requireActivity().resources.getString(R.string.error_input_address), Snackbar.LENGTH_SHORT).show()
+            else {
+                sharedPreferencesEditor
+                    .putStringSet(KEY_FAVOURITES, adapter.addItem(ui.newHostEditText.text.toString()).toSet())
+                    .commit()
+                adapter.notifyDataSetChanged()
+            }
+        }
     }
 
     override fun onDestroy() {
@@ -73,7 +85,8 @@ class FavouritesFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.deleteItems -> {
-                sharedPreferencesEditor.putStringSet(KEY_FAVOURITES, adapter.removeItems().toSet())
+                sharedPreferencesEditor
+                    .putStringSet(KEY_FAVOURITES, adapter.removeItems().toSet())
                     .commit()
                 adapter.notifyDataSetChanged()
             }
