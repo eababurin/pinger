@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.preference.PreferenceManager
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import ru.eababurin.pinger.databinding.FragmentMainBinding
@@ -184,6 +185,8 @@ class MainFragment : Fragment() {
         }
 
         ui.outputEditText.apply {
+            textSize = PreferenceManager.getDefaultSharedPreferences(requireContext())
+                .getInt("output_font_size", 14).toFloat()
             keyListener = null
             addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}

@@ -15,5 +15,20 @@
             app:defaultValue="system" />
 
     </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Запросы"
+        app:key="request_settings">
+
+        <SeekBarPreference
+            android:defaultValue="15"
+            android:key="output_font_size"
+            android:max="20"
+            android:title="Размер шрифта вывода"
+            app:defaultValue="14"
+            app:min="8"
+            app:showSeekBarValue="true" />
+
+    </PreferenceCategory>
+
 
 </PreferenceScreen>
