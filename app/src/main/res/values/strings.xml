@@ -25,4 +25,12 @@
     <string name="output_separator">\n</string>
     <string name="google_public_dns">8.8.8.8</string>
     <string name="settings">Настройки</string>
+
+    <string name="theme_system">Системная</string>
+    <string name="theme_light">Светлая</string>
+    <string name="theme_dark">Тёмная</string>
+
+    <string name="theme_select_system">Выбрана системная тема</string>
+    <string name="theme_select_light">Выбрана светлая тема</string>
+    <string name="theme_select_dark">Выбрана тёмная тема</string>
 </resources>

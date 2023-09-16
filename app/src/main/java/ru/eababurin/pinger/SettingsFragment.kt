@@ -1,7 +1,5 @@
 package ru.eababurin.pinger
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,9 +17,6 @@ class SettingsFragment : Fragment() {
 
     private lateinit var mainViewModel: MainViewModel
 
-    private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var sharedPreferencesEditor: SharedPreferences.Editor
-
     private var favouritesList = mutableSetOf<String>()
 
     override fun onCreateView(
@@ -30,11 +25,7 @@ class SettingsFragment : Fragment() {
         _ui = FragmentSettingsBinding.inflate(inflater, container, false)
 
         (activity as AppCompatActivity).setSupportActionBar(ui.topAppBar)
-        mainViewModel =
-            ViewModelProvider(requireActivity())[MainViewModel::class.java]
-
-        sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
-        sharedPreferencesEditor = sharedPreferences.edit()
+        mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
 
         return ui.root
     }
@@ -42,17 +33,9 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        ui.topAppBar.setNavigationOnClickListener {
-            requireActivity().onBackPressed()
-        }
-    }
+        ui.topAppBar.setNavigationOnClickListener { requireActivity().onBackPressed() }
+        childFragmentManager.beginTransaction().replace(R.id.settingsFrame, Settings()).commit()
 
-    override fun onPause() {
-        super.onPause()
-
-        mainViewModel.run {
-
-        }
     }
 
     override fun onDestroy() {

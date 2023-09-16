@@ -88,7 +88,7 @@ class MainFragment : Fragment() {
         ui.hostnameEditText.apply {
 
             favouritesList = sharedPreferences.getStringSet(
-                FAVOURITES,
+                KEY_FAVOURITES,
                 mutableSetOf("")
             )!!.toMutableSet()
             if (!favouritesList.contains(""))
@@ -226,10 +226,10 @@ class MainFragment : Fragment() {
                     )
 
                     if (!ui.hostnameEditText.text.isNullOrBlank()) {
-                        sharedPreferencesEditor.remove(FAVOURITES)
+                        sharedPreferencesEditor.remove(KEY_FAVOURITES)
                         favouritesList.add(ui.hostnameEditText.text.toString())
                         if (favouritesList.contains("")) favouritesList.remove("")
-                        sharedPreferencesEditor.putStringSet(FAVOURITES, favouritesList.toSet())
+                        sharedPreferencesEditor.putStringSet(KEY_FAVOURITES, favouritesList.toSet())
                         sharedPreferencesEditor.apply()
                         ui.hostnameEditText.setAdapter(
                             ArrayAdapter(
