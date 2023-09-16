@@ -14,7 +14,13 @@
             android:title="Тема приложения"
             app:defaultValue="system" />
 
+        <Preference
+            android:key="favourites"
+            android:title="Избранное"
+            android:summary="Редактировать список адресов" />
+
     </PreferenceCategory>
+
     <PreferenceCategory
         android:title="Запросы"
         app:key="request_settings">
@@ -44,6 +50,5 @@
             app:defaultValue="0" />
 
     </PreferenceCategory>
-
 
 </PreferenceScreen>

@@ -45,7 +45,8 @@ class MainFragment : Fragment() {
         mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
         setHasOptionsMenu(true)
 
-        sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
+//        sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
         sharedPreferencesEditor = sharedPreferences.edit()
 
         return ui.root

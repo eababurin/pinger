@@ -11,6 +11,7 @@ import androidx.preference.PreferenceManager
 class Settings : PreferenceFragmentCompat() {
 
     private lateinit var themePreference: Preference
+    private lateinit var favouritesPreference: Preference
 
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var preferencesEditor: SharedPreferences.Editor
@@ -20,6 +21,17 @@ class Settings : PreferenceFragmentCompat() {
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
         preferencesEditor = sharedPreferences.edit()
+
+        favouritesPreference = findPreference<Preference>("favourites")!!.apply {
+            setOnPreferenceClickListener {
+                requireActivity().supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.fragmentLayout, FavouritesFragment())
+                    .addToBackStack(null)
+                    .commit()
+                true
+            }
+        }
 
         themePreference = findPreference<ListPreference>("theme")!!.apply {
             summary = sharedPreferences?.getString(
@@ -31,6 +43,7 @@ class Settings : PreferenceFragmentCompat() {
                 applyTheme(newValue.toString()); true
             }
         }
+
     }
 
     private fun applyTheme(theme: String) {
