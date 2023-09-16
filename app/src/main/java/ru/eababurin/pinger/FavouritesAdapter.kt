@@ -1,6 +1,5 @@
 package ru.eababurin.pinger
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 class FavouritesAdapter(private val favouritesList: MutableList<String>) :
     RecyclerView.Adapter<FavouritesAdapter.ViewHolder>() {
 
-    val checkedItems = mutableListOf<String>()
+    private val checkedItems = mutableListOf<String>()
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -30,7 +29,6 @@ class FavouritesAdapter(private val favouritesList: MutableList<String>) :
             } else {
                 checkedItems.remove(holder.hostname.text.toString())
             }
-            Log.d("TEST", checkedItems.toString())
         }
     }
 
@@ -55,4 +53,6 @@ class FavouritesAdapter(private val favouritesList: MutableList<String>) :
         favouritesList.add(item)
         return favouritesList
     }
+
+    fun checkedCount() = checkedItems.size
 }

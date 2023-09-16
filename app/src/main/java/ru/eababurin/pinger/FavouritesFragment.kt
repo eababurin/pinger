@@ -8,6 +8,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -58,11 +59,19 @@ class FavouritesFragment : Fragment() {
 
         ui.addHostButton.setOnClickListener {
             if (ui.newHostEditText.text.isNullOrEmpty())
-                Snackbar.make(ui.layout, requireActivity().resources.getString(R.string.error_input_address), Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(
+                    ui.layout,
+                    requireActivity().resources.getString(R.string.error_input_address),
+                    Snackbar.LENGTH_SHORT
+                ).show()
             else {
                 sharedPreferencesEditor
-                    .putStringSet(KEY_FAVOURITES, adapter.addItem(ui.newHostEditText.text.toString()).toSet())
+                    .putStringSet(
+                        KEY_FAVOURITES,
+                        adapter.addItem(ui.newHostEditText.text.toString()).toSet()
+                    )
                     .commit()
+                ui.newHostEditText.text.clear()
                 adapter.notifyDataSetChanged()
             }
         }
@@ -85,10 +94,26 @@ class FavouritesFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.deleteItems -> {
-                sharedPreferencesEditor
-                    .putStringSet(KEY_FAVOURITES, adapter.removeItems().toSet())
-                    .commit()
-                adapter.notifyDataSetChanged()
+                if (adapter.checkedCount() > 0) {
+                    sharedPreferencesEditor
+                        .putStringSet(KEY_FAVOURITES, adapter.removeItems().toSet())
+                        .commit()
+                    adapter.notifyDataSetChanged()
+
+                    for (i in 0..ui.recyclerView.childCount) {
+                        val view = ui.recyclerView.getChildAt(i)
+                        if (view is CheckBox) {
+                            view.findViewById<CheckBox>(R.id.checkbox).isChecked = false
+                        }
+
+                    }
+                } else {
+                    Snackbar.make(
+                        ui.layout,
+                        resources.getString(R.string.selected_items),
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                }
             }
         }
         return super.onOptionsItemSelected(item)

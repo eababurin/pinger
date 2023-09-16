@@ -39,4 +39,5 @@
     <string name="error_input_address">Введите адрес</string>
     <string name="input_new_address">Введите новый адрес</string>
     <string name="add">Добавить</string>
+    <string name="selected_items">Выберите адреса, которые нужно удалить</string>
 </resources>
