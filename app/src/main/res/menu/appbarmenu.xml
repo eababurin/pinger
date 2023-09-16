@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/menuSettings"
+        android:id="@+id/menuOpenSettings"
         android:icon="@drawable/baseline_settings_24"
         android:title="@string/settings"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/deleteItems"
+        android:id="@+id/menuDeleteItems"
         android:icon="@drawable/baseline_delete_outline_24"
         android:title="@string/remove"
         android:visible="false"

@@ -40,4 +40,16 @@
     <string name="input_new_address">Введите новый адрес</string>
     <string name="add">Добавить</string>
     <string name="selected_items">Выберите адреса, которые нужно удалить</string>
+
+    <string name="settings_app">Настройки приложения</string>
+    <string name="settings_app_theme">Тема приложения</string>
+    <string name="settings_auto_add_host">Добавлять в избранное</string>
+    <string name="settings_auto_add_host_summary">Автоматически добавлять адрес в избранное при первой отправке запроса</string>
+    <string name="settings_favourites">Избранное</string>
+    <string name="settings_favourites_summary">Редактировать список адресов</string>
+    <string name="settings_requests">Запросы</string>
+    <string name="settings_font_size">Размер шрифта вывода</string>
+    <string name="settings_count_requests">Количество запросов по умолчанию</string>
+    <string name="settings_count_requests_summary">При установке 0 запрос будет отправляться до принудительной остановки</string>
+    <string name="settings_interval">Интервал запросов по умолчанию</string>
 </resources>

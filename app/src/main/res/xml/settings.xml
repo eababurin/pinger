@@ -3,56 +3,56 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
-        android:title="Настройки приложения"
-        app:key="app_settings">
+        android:title="@string/settings_app"
+        app:key="settings_app_settings">
 
         <ListPreference
             android:defaultValue="system"
             android:entries="@array/theme_options"
             android:entryValues="@array/theme_values"
-            android:key="theme"
-            android:title="Тема приложения"
+            android:key="settings_theme"
+            android:title="@string/settings_app_theme"
             app:defaultValue="system" />
 
         <CheckBoxPreference
-            android:key="auto_add_hosts"
-            android:title="Добавлять в избранное"
-            android:summary="Автоматически добавлять адрес в избранное при первой отправке запроса"
+            android:key="settings_auto_add_host"
+            android:summary="@string/settings_auto_add_host_summary"
+            android:title="@string/settings_auto_add_host"
             app:defaultValue="true" />
 
         <Preference
-            android:key="favourites"
-            android:title="Избранное"
-            android:summary="Редактировать список адресов" />
+            android:key="settings_favourites"
+            android:summary="@string/settings_favourites_summary"
+            android:title="@string/favourites" />
 
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="Запросы"
-        app:key="request_settings">
+        android:title="@string/settings_requests"
+        app:key="settings_requests">
 
         <SeekBarPreference
             android:defaultValue="15"
-            android:key="output_font_size"
+            android:key="settings_output_font_size"
             android:max="20"
-            android:title="Размер шрифта вывода"
+            android:title="@string/settings_font_size"
             app:defaultValue="14"
             app:min="8"
             app:showSeekBarValue="true" />
 
         <EditTextPreference
             android:inputType="number"
-            android:key="default_count"
+            android:key="settings_default_count"
             android:selectAllOnFocus="true"
-            android:summary="При установке 0 запрос будет отправляться до принудительной остановки"
-            android:title="Количество запросов по умолчанию"
+            android:summary="@string/settings_count_requests_summary"
+            android:title="@string/settings_count_requests"
             app:defaultValue="0" />
 
         <EditTextPreference
             android:inputType="number"
-            android:key="default_interval"
+            android:key="settings_default_interval"
             android:selectAllOnFocus="true"
-            android:title="Интервал запросов по умолчанию"
+            android:title="@string/settings_interval"
             app:defaultValue="0" />
 
     </PreferenceCategory>

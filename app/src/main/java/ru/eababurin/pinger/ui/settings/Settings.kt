@@ -31,11 +31,11 @@ class Settings : PreferenceFragmentCompat() {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
         preferencesEditor = sharedPreferences.edit()
 
-        autoAddHost = findPreference<CheckBoxPreference>("auto_add_hosts")!!.apply {
+        autoAddHost = findPreference<CheckBoxPreference>("settings_auto_add_host")!!.apply {
 
         }
 
-        favouritesPreference = findPreference<Preference>("favourites")!!.apply {
+        favouritesPreference = findPreference<Preference>("settings_favourites")!!.apply {
             setOnPreferenceClickListener {
                 requireActivity().supportFragmentManager
                     .beginTransaction()
@@ -46,7 +46,7 @@ class Settings : PreferenceFragmentCompat() {
             }
         }
 
-        themePreference = findPreference<ListPreference>("theme")!!.apply {
+        themePreference = findPreference<ListPreference>("settings_theme")!!.apply {
             summary = sharedPreferences?.getString(
                 KEY_THEME_SUMMARY,
                 resources.getString(R.string.theme_select_system)

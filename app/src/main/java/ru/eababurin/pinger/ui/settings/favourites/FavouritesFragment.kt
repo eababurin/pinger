@@ -61,7 +61,7 @@ class FavouritesFragment : Fragment() {
         ui.recyclerView.adapter = adapter
 
         ui.addHostButton.setOnClickListener {
-            if (ui.newHostEditText.text.isNullOrEmpty())
+            if (ui.addHostEditText.text.isNullOrEmpty())
                 Snackbar.make(
                     ui.layout,
                     requireActivity().resources.getString(R.string.error_input_address),
@@ -71,10 +71,10 @@ class FavouritesFragment : Fragment() {
                 sharedPreferencesEditor
                     .putStringSet(
                         KEY_FAVOURITES,
-                        adapter.addItem(ui.newHostEditText.text.toString()).toSet()
+                        adapter.addItem(ui.addHostEditText.text.toString()).toSet()
                     )
                     .commit()
-                ui.newHostEditText.text.clear()
+                ui.addHostEditText.text.clear()
                 adapter.notifyDataSetChanged()
             }
         }
@@ -88,15 +88,15 @@ class FavouritesFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.appbarmenu, menu)
 
-        menu.findItem(R.id.menuSettings).isVisible = false
-        menu.findItem(R.id.deleteItems).isVisible = true
+        menu.findItem(R.id.menuOpenSettings).isVisible = false
+        menu.findItem(R.id.menuDeleteItems).isVisible = true
 
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.deleteItems -> {
+            R.id.menuDeleteItems -> {
                 if (adapter.checkedCount() > 0) {
                     sharedPreferencesEditor
                         .putStringSet(KEY_FAVOURITES, adapter.removeItems().toSet())

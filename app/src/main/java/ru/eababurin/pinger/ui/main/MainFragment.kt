@@ -98,7 +98,7 @@ class MainFragment : Fragment() {
         }
 
         ui.countEditText.apply {
-            val count = PreferenceManager.getDefaultSharedPreferences(requireContext()).getString("default_count", "")
+            val count = PreferenceManager.getDefaultSharedPreferences(requireContext()).getString("settings_default_count", "")
             if (count == "0") {
                 setText(resources.getString(R.string.infinity))
                 mainViewModel.requestCount.value = resources.getString(R.string.infinity)
@@ -109,7 +109,7 @@ class MainFragment : Fragment() {
         }
 
         ui.intervalEditText.apply {
-            val interval = PreferenceManager.getDefaultSharedPreferences(requireContext()).getString("default_interval", "")
+            val interval = PreferenceManager.getDefaultSharedPreferences(requireContext()).getString("settings_default_interval", "")
             if (interval != "")  {
                 setText(interval)
                 mainViewModel.requestInterval.value = interval
@@ -118,7 +118,7 @@ class MainFragment : Fragment() {
 
         ui.outputEditText.apply {
             textSize = PreferenceManager.getDefaultSharedPreferences(requireContext())
-                .getInt("output_font_size", 14).toFloat()
+                .getInt("settings_output_font_size", 14).toFloat()
             keyListener = null
             addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
@@ -162,7 +162,7 @@ class MainFragment : Fragment() {
 
                     if (!ui.hostnameEditText.text.isNullOrBlank()) {
 
-                        if (sharedPreferences.getBoolean("auto_add_hosts", true)) {
+                        if (sharedPreferences.getBoolean("settings_auto_add_host", true)) {
                             sharedPreferencesEditor.apply {
                                 remove(KEY_FAVOURITES)
                                 favouritesList.add(ui.hostnameEditText.text.toString())
@@ -226,15 +226,15 @@ class MainFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.appbarmenu, menu)
 
-        menu.findItem(R.id.menuSettings).isVisible = true
-        menu.findItem(R.id.deleteItems).isVisible = false
+        menu.findItem(R.id.menuOpenSettings).isVisible = true
+        menu.findItem(R.id.menuDeleteItems).isVisible = false
 
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menuSettings -> {
+            R.id.menuOpenSettings -> {
                 requireActivity().supportFragmentManager.beginTransaction()
                     .replace(R.id.fragmentLayout, SettingsFragment()).addToBackStack(null).commit()
             }
