@@ -88,129 +88,59 @@ class MainFragment : Fragment() {
 
         ui.hostnameEditText.apply {
 
-            favouritesList = sharedPreferences.getStringSet(
-                KEY_FAVOURITES,
-                mutableSetOf("")
-            )!!.toMutableSet()
+            favouritesList = sharedPreferences.getStringSet(KEY_FAVOURITES, mutableSetOf(""))!!.toMutableSet()
             if (!favouritesList.contains(""))
-                setAdapter(
-                    ArrayAdapter(
-                        requireActivity(),
-                        android.R.layout.simple_list_item_1,
-                        favouritesList.toList()
-                    )
-                )
-
-            onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
-                if (hasFocus) {
-                    if (ui.hostnameEditText.text.isNullOrBlank()) {
-                        ui.hostnameEditText.error =
-                            requireActivity().resources.getString(R.string.error_field_cannot_be_empty)
-                    } else {
-                        ui.hostnameEditText.error = null
-                    }
-                }
-            }
+                setAdapter(ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1, favouritesList.toList()))
 
             addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
                 override fun afterTextChanged(p0: Editable?) {}
-                override fun onTextChanged(
-                    s: CharSequence?, start: Int, before: Int, count: Int
-                ) {
-                    if ((s.isNullOrBlank()) || (s.toString() == "0")) {
-                        ui.hostnameEditText.error =
-                            requireActivity().resources.getString(R.string.error_field_cannot_be_empty)
-                    } else {
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    if ((s.isNullOrBlank()) || (s.toString() == "0"))
+                        ui.hostnameEditText.error = requireActivity().resources.getString(R.string.error_field_cannot_be_empty)
+                    else
                         ui.hostnameEditText.error = null
-                    }
                 }
             })
         }
 
         ui.countEditText.apply {
-            when (val count = PreferenceManager.getDefaultSharedPreferences(requireContext())
-                .getString("default_count", "")) {
-                null -> {
-                    setText("")
-                    mainViewModel.requestCount.value = ""
-                }
-
-                "0" -> {
-                    setText(resources.getString(R.string.infinity))
-                    mainViewModel.requestCount.value = resources.getString(R.string.infinity)
-                }
-
-                else -> {
-                    setText(count)
-                    mainViewModel.requestCount.value = count
-                }
-            }
-
-            onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
-                if (hasFocus) {
-                    if (ui.countEditText.text.contains(
-                            requireActivity().resources.getString(
-                                R.string.infinity
-                            )
-                        )
-                    ) ui.countEditText.text.clear()
-
-                    if (ui.countEditText.text.isNullOrBlank()) ui.countEditText.error =
-                        requireActivity().resources.getString(R.string.error_less_than_zero)
-                    else ui.countEditText.error = null
-                }
-
-                addTextChangedListener(object : TextWatcher {
-                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-                    override fun afterTextChanged(p0: Editable?) {}
-                    override fun onTextChanged(
-                        s: CharSequence?, start: Int, before: Int, count: Int
-                    ) {
-                        if ((s.isNullOrBlank()) || (s.toString() == "0")) {
-                            ui.countEditText.error =
-                                requireActivity().resources.getString(R.string.error_less_than_zero)
-                        } else {
-                            ui.countEditText.error = null
-                        }
-                    }
-                })
-            }
-        }
-
-        ui.intervalEditText.apply {
-            when (val interval = PreferenceManager.getDefaultSharedPreferences(requireContext())
-                .getString("default_interval", "")) {
-                null -> {
-                    setText("")
-                    mainViewModel.requestInterval.value = ""
-                }
-
-                else -> {
-                    setText(interval)
-                    mainViewModel.requestInterval.value = interval
-                }
-            }
-
-            onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
-                if (hasFocus) {
-                    if (ui.intervalEditText.text.isNullOrBlank())
-                        ui.intervalEditText.error =
-                            requireActivity().resources.getString(R.string.error_less_than_zero)
-                    else ui.intervalEditText.error = null
-                }
+            val count = PreferenceManager.getDefaultSharedPreferences(requireContext()).getString("default_count", "")
+            if (count == "0") {
+                setText(resources.getString(R.string.infinity))
+                mainViewModel.requestCount.value = resources.getString(R.string.infinity)
+            } else if (count != "") {
+                setText(count)
+                mainViewModel.requestCount.value = count
             }
 
             addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
                 override fun afterTextChanged(p0: Editable?) {}
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    if ((s.isNullOrBlank()) || (s.toString() == "0")) {
-                        ui.intervalEditText.error =
-                            requireActivity().resources.getString(R.string.error_less_than_zero)
-                    } else {
+                    if ((s.isNullOrBlank()) || (s.toString() == "0"))
+                        ui.countEditText.error = requireActivity().resources.getString(R.string.error_less_than_zero)
+                    else
+                        ui.countEditText.error = null
+                }
+            })
+        }
+
+        ui.intervalEditText.apply {
+            val interval = PreferenceManager.getDefaultSharedPreferences(requireContext()).getString("default_interval", "")
+            if (interval != "")  {
+                setText(interval)
+                mainViewModel.requestInterval.value = interval
+            }
+
+            addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+                override fun afterTextChanged(p0: Editable?) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    if ((s.isNullOrBlank()) || (s.toString() == "0"))
+                        ui.intervalEditText.error = requireActivity().resources.getString(R.string.error_less_than_zero)
+                    else
                         ui.intervalEditText.error = null
-                    }
                 }
             })
         }
