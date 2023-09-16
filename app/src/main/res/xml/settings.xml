@@ -28,6 +28,21 @@
             app:min="8"
             app:showSeekBarValue="true" />
 
+        <EditTextPreference
+            android:inputType="number"
+            android:key="default_count"
+            android:selectAllOnFocus="true"
+            android:summary="При установке 0 запрос будет отправляться до принудительной остановки"
+            android:title="Количество запросов по умолчанию"
+            app:defaultValue="0" />
+
+        <EditTextPreference
+            android:inputType="number"
+            android:key="default_interval"
+            android:selectAllOnFocus="true"
+            android:title="Интервал запросов по умолчанию"
+            app:defaultValue="0" />
+
     </PreferenceCategory>
 
 

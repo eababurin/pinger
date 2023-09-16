@@ -129,6 +129,22 @@ class MainFragment : Fragment() {
         }
 
         ui.countEditText.apply {
+            when (val count = PreferenceManager.getDefaultSharedPreferences(requireContext()).getString("default_count", "")) {
+                null -> {
+                    setText("")
+                    mainViewModel.requestCount.value = ""
+                }
+
+                "0" -> {
+                    setText(resources.getString(R.string.infinity))
+                    mainViewModel.requestCount.value = resources.getString(R.string.infinity)
+                }
+                else -> {
+                    setText(count)
+                    mainViewModel.requestCount.value = count
+                }
+            }
+
             onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
                 if (hasFocus) {
                     if (ui.countEditText.text.contains(
@@ -161,6 +177,17 @@ class MainFragment : Fragment() {
         }
 
         ui.intervalEditText.apply {
+            when (val interval = PreferenceManager.getDefaultSharedPreferences(requireContext()).getString("default_interval", "")) {
+                null -> {
+                    setText("")
+                    mainViewModel.requestInterval.value = ""
+                }
+                else -> {
+                    setText(interval)
+                    mainViewModel.requestInterval.value = interval
+                }
+            }
+
             onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
                 if (hasFocus) {
                     if (ui.intervalEditText.text.isNullOrBlank())
