@@ -1,4 +1,4 @@
-package ru.eababurin.pinger
+package ru.eababurin.pinger.ui.settings.favourites
 
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -14,7 +14,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import com.google.android.material.snackbar.Snackbar
+import ru.eababurin.pinger.viewmodels.MainViewModel
+import ru.eababurin.pinger.R
 import ru.eababurin.pinger.databinding.FragmentFavouritesBinding
+import ru.eababurin.pinger.utils.KEY_FAVOURITES
 
 class FavouritesFragment : Fragment() {
 

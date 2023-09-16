@@ -1,8 +1,9 @@
-package ru.eababurin.pinger
+package ru.eababurin.pinger.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import ru.eababurin.pinger.R
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 

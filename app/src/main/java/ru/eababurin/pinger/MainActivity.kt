@@ -4,6 +4,11 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceManager
+import ru.eababurin.pinger.ui.main.MainFragment
+import ru.eababurin.pinger.utils.KEY_THEME
+import ru.eababurin.pinger.utils.THEME_DARK
+import ru.eababurin.pinger.utils.THEME_LIGHT
+import ru.eababurin.pinger.utils.THEME_SYSTEM
 
 class MainActivity : AppCompatActivity() {
 

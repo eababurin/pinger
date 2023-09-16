@@ -1,4 +1,4 @@
-package ru.eababurin.pinger
+package ru.eababurin.pinger.ui.main
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -21,7 +21,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
+import ru.eababurin.pinger.viewmodels.MainViewModel
+import ru.eababurin.pinger.R
 import ru.eababurin.pinger.databinding.FragmentMainBinding
+import ru.eababurin.pinger.ui.settings.SettingsFragment
+import ru.eababurin.pinger.utils.KEY_FAVOURITES
 
 
 class MainFragment : Fragment() {

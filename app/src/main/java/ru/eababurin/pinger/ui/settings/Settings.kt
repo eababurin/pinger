@@ -1,4 +1,4 @@
-package ru.eababurin.pinger
+package ru.eababurin.pinger.ui.settings
 
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -8,6 +8,13 @@ import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
+import ru.eababurin.pinger.R
+import ru.eababurin.pinger.ui.settings.favourites.FavouritesFragment
+import ru.eababurin.pinger.utils.KEY_THEME
+import ru.eababurin.pinger.utils.KEY_THEME_SUMMARY
+import ru.eababurin.pinger.utils.THEME_DARK
+import ru.eababurin.pinger.utils.THEME_LIGHT
+import ru.eababurin.pinger.utils.THEME_SYSTEM
 
 class Settings : PreferenceFragmentCompat() {
 

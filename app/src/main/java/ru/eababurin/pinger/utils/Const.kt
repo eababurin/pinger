@@ -1,4 +1,4 @@
-package ru.eababurin.pinger
+package ru.eababurin.pinger.utils
 
 const val KEY_FAVOURITES = "FAVOURITES"
 const val KEY_THEME = "THEME"

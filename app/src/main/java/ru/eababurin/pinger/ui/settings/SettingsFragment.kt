@@ -1,4 +1,4 @@
-package ru.eababurin.pinger
+package ru.eababurin.pinger.ui.settings
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import ru.eababurin.pinger.viewmodels.MainViewModel
+import ru.eababurin.pinger.R
 import ru.eababurin.pinger.databinding.FragmentSettingsBinding
 
 
@@ -16,9 +18,7 @@ class SettingsFragment : Fragment() {
     private val ui get() = _ui!!
 
     private lateinit var mainViewModel: MainViewModel
-
-    private var favouritesList = mutableSetOf<String>()
-
+    
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
