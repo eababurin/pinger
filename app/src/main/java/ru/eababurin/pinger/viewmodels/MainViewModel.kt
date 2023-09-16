@@ -61,7 +61,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                     }
                 }
             } catch (e: Exception) {
-                pingError.postValue(R.string.unknown_error)
+                pingError.postValue(R.string.error_unknown)
             } finally {
                 process.destroy()
             }

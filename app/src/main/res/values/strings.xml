@@ -1,31 +1,31 @@
 <resources>
     <string name="app_name">Pinger</string>
-    <string name="server_address_hint">Введите адрес сервера</string>
-    <string name="add_to_favorites_description">Добавить в избранное</string>
-    <string name="change_theme">Сменить тему</string>
-    <string name="button_check_availability">Проверить доступность</string>
+    <string name="favourites">Избранное</string>
+    <string name="settings">Настройки</string>
+
+    <string name="button_aborted">Прервать</string>
+    <string name="button_add">Добавить</string>
     <string name="button_clear">Очистить</string>
-    <string name="clear_button">Очистить</string>
-    <string name="send_request">Отправить</string>
-    <string name="result">Результат</string>
-    <string name="default_interval">1</string>
-    <string name="interval">Интервал запросов</string>
-    <string name="default_count">4</string>
-    <string name="count_requests">Количество запросов</string>
-    <string name="hostname">Адрес хоста</string>
-    <string name="unknown_error">Произошла неизвестная ошибка</string>
-    <string name="hostname_not_filled">Адрес не указан</string>
-    <string name="output_was_copied">Вывод скопирован в буфер обмена</string>
-    <string name="error_less_than_zero">Должно быть больше 0</string>
+    <string name="button_remove">Удалить</string>
+    <string name="button_send_request">Отправить</string>
+
+    <string name="edittext_count_requests">Количество запросов</string>
+    <string name="edittext_input_new_address">Введите новый адрес</string>
+    <string name="edittext_hostname">Адрес хоста</string>
+    <string name="edittext_interval">Интервал запросов</string>
+    <string name="edittext_output">Результат</string>
+
+    <string name="error_check_address_field">Адрес должен быть заполнен</string>
+    <string name="error_input_address">Введите адрес</string>
     <string name="error_field_cannot_be_empty">Поле не может быть пустым</string>
-    <string name="check_fields_are_filled_in">Проверьте заполняемость полей</string>
-    <string name="check_address_field">Адрес должен быть заполнен</string>
-    <string name="request_aborted">\nrequest aborted</string>
-    <string name="aborted">Прервать</string>
+    <string name="error_unknown">Произошла неизвестная ошибка</string>
+    <string name="error_less_than_zero">Должно быть больше 0</string>
+
+    <string name="notify_output_was_copied">Вывод скопирован в буфер обмена</string>
+    <string name="notify_selected_items">Выберите адреса, которые нужно удалить</string>
+
     <string name="infinity">∞</string>
     <string name="output_separator">\n</string>
-    <string name="google_public_dns">8.8.8.8</string>
-    <string name="settings">Настройки</string>
 
     <string name="theme_system">Системная</string>
     <string name="theme_light">Светлая</string>
@@ -34,12 +34,6 @@
     <string name="theme_select_system">Выбрана системная тема</string>
     <string name="theme_select_light">Выбрана светлая тема</string>
     <string name="theme_select_dark">Выбрана тёмная тема</string>
-    <string name="favourites">Избранное</string>
-    <string name="remove">Удалить</string>
-    <string name="error_input_address">Введите адрес</string>
-    <string name="input_new_address">Введите новый адрес</string>
-    <string name="add">Добавить</string>
-    <string name="selected_items">Выберите адреса, которые нужно удалить</string>
 
     <string name="settings_app">Настройки приложения</string>
     <string name="settings_app_theme">Тема приложения</string>

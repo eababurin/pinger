@@ -141,7 +141,7 @@ class MainFragment : Fragment() {
 
                     Snackbar.make(
                         ui.layout,
-                        requireActivity().resources.getString(R.string.output_was_copied),
+                        requireActivity().resources.getString(R.string.notify_output_was_copied),
                         Snackbar.LENGTH_SHORT
                     ).show()
 
@@ -185,7 +185,7 @@ class MainFragment : Fragment() {
 
                     Snackbar.make(
                         ui.layout,
-                        resources.getString(R.string.check_address_field),
+                        resources.getString(R.string.error_check_address_field),
                         Snackbar.LENGTH_SHORT
                     ).show()
                 }

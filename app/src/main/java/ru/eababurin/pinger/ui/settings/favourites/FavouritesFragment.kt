@@ -113,7 +113,7 @@ class FavouritesFragment : Fragment() {
                 } else {
                     Snackbar.make(
                         ui.layout,
-                        resources.getString(R.string.selected_items),
+                        resources.getString(R.string.notify_selected_items),
                         Snackbar.LENGTH_SHORT
                     ).show()
                 }
