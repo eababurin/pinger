@@ -129,7 +129,8 @@ class MainFragment : Fragment() {
         }
 
         ui.countEditText.apply {
-            when (val count = PreferenceManager.getDefaultSharedPreferences(requireContext()).getString("default_count", "")) {
+            when (val count = PreferenceManager.getDefaultSharedPreferences(requireContext())
+                .getString("default_count", "")) {
                 null -> {
                     setText("")
                     mainViewModel.requestCount.value = ""
@@ -139,6 +140,7 @@ class MainFragment : Fragment() {
                     setText(resources.getString(R.string.infinity))
                     mainViewModel.requestCount.value = resources.getString(R.string.infinity)
                 }
+
                 else -> {
                     setText(count)
                     mainViewModel.requestCount.value = count
@@ -177,11 +179,13 @@ class MainFragment : Fragment() {
         }
 
         ui.intervalEditText.apply {
-            when (val interval = PreferenceManager.getDefaultSharedPreferences(requireContext()).getString("default_interval", "")) {
+            when (val interval = PreferenceManager.getDefaultSharedPreferences(requireContext())
+                .getString("default_interval", "")) {
                 null -> {
                     setText("")
                     mainViewModel.requestInterval.value = ""
                 }
+
                 else -> {
                     setText(interval)
                     mainViewModel.requestInterval.value = interval
@@ -256,11 +260,16 @@ class MainFragment : Fragment() {
                     )
 
                     if (!ui.hostnameEditText.text.isNullOrBlank()) {
-                        sharedPreferencesEditor.remove(KEY_FAVOURITES)
-                        favouritesList.add(ui.hostnameEditText.text.toString())
-                        if (favouritesList.contains("")) favouritesList.remove("")
-                        sharedPreferencesEditor.putStringSet(KEY_FAVOURITES, favouritesList.toSet())
-                        sharedPreferencesEditor.apply()
+
+                        if (sharedPreferences.getBoolean("auto_add_hosts", true)) {
+                            sharedPreferencesEditor.apply {
+                                remove(KEY_FAVOURITES)
+                                favouritesList.add(ui.hostnameEditText.text.toString())
+                                if (favouritesList.contains("")) favouritesList.remove("")
+                                putStringSet(KEY_FAVOURITES, favouritesList.toSet())
+                            }.apply()
+                        }
+
                         ui.hostnameEditText.setAdapter(
                             ArrayAdapter(
                                 requireActivity(),

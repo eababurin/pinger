@@ -14,6 +14,12 @@
             android:title="Тема приложения"
             app:defaultValue="system" />
 
+        <CheckBoxPreference
+            android:key="auto_add_hosts"
+            android:title="Добавлять в избранное"
+            android:summary="Автоматически добавлять адрес в избранное при первой отправке запроса"
+            app:defaultValue="true" />
+
         <Preference
             android:key="favourites"
             android:title="Избранное"

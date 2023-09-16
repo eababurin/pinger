@@ -3,6 +3,7 @@ package ru.eababurin.pinger
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.preference.CheckBoxPreference
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -12,6 +13,7 @@ class Settings : PreferenceFragmentCompat() {
 
     private lateinit var themePreference: Preference
     private lateinit var favouritesPreference: Preference
+    private lateinit var autoAddHost: Preference
 
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var preferencesEditor: SharedPreferences.Editor
@@ -21,6 +23,10 @@ class Settings : PreferenceFragmentCompat() {
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
         preferencesEditor = sharedPreferences.edit()
+
+        autoAddHost = findPreference<CheckBoxPreference>("auto_add_hosts")!!.apply {
+
+        }
 
         favouritesPreference = findPreference<Preference>("favourites")!!.apply {
             setOnPreferenceClickListener {
