@@ -20,7 +20,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun ping(hostname: String, counts: String, interval: String) {
         Thread {
-            if (listOfOutput.isNotEmpty()) listOfOutput.add((outputSeparator))
+            /*if (listOfOutput.isNotEmpty()) listOfOutput.add((outputSeparator))*/
 
             val inputCommand = mutableListOf<String>()
 
