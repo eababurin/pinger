@@ -16,7 +16,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val requestHostname = MutableLiveData<String>()
     val requestCount = MutableLiveData<String>()
     val requestInterval = MutableLiveData<String>()
-    val outputSeparator = application.getString(R.string.output_separator)
+    /*val outputSeparator = application.getString(R.string.output_separator)*/
 
     fun ping(hostname: String, counts: String, interval: String) {
         Thread {
@@ -24,7 +24,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
             val inputCommand = mutableListOf<String>()
 
-            if (counts == "∞") inputCommand.addAll(listOf("ping", "-i", interval, hostname))
+            if (counts == "∞") inputCommand.addAll(listOf("ping", "-i", interval, "-W", interval, hostname))
             else inputCommand.addAll(listOf("ping", "-c", counts, "-i", interval, hostname))
 
             val process = ProcessBuilder().command(inputCommand).start()
